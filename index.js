@@ -11,8 +11,7 @@ client.once("ready", () => {
 	console.log("Ready!");
 
     const baseFile = "_command_handler.js";
-    const templateFile = "_template.js";
-    const commandBase = require(`./commands/${baseFile}`);
+    const commandBase = require(`./${baseFile}`);
 
     const readCommands = dir => {
         const files = fs.readdirSync(path.join(__dirname, dir));
@@ -22,7 +21,7 @@ client.once("ready", () => {
 
             if (stat.isDirectory()) {
                 readCommands(path.join(dir, file));
-            } else if (file !== baseFile || file !== templateFile) {
+            } else {
                 const option = require(path.join(__dirname, dir, file));
 
                 console.log(file, option);
