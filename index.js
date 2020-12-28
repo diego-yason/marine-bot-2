@@ -109,14 +109,14 @@ client.on("userUpdate", async (OldUser, NewUser) => {
     }
 
     usernameChangeSchema.findById(id, (error, userHistory) => {
-        const { _id, usernameHistory } = userHistory;
-
         // check if the entry exists
-        if (_id === null) {
+        if (userHistory._id === null) {
             // entry doesn't exist
             exists = false;
             return;
         }
+
+        const { usernameHistory } = userHistory;
 
         usernameHistory.push({
             username: tagNew,
