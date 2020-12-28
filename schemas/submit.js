@@ -17,4 +17,5 @@ const submitSchema = mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("legislation", submitSchema);
+// TODO: Add options for flexibility
+module.exports = mongoose.model("legislations", submitSchema);
