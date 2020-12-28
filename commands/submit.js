@@ -4,38 +4,62 @@ commands
 callback
 */
 
+const { Schema } = require("mongoose");
 const mongo = require("../mongo");
 const schema = require("../schemas/submit");
+
+const congressNumber = "6";
 
 module.exports = {
     commands: ["submit"],
     callback: async (message, args, text) => {
         const { member } = message;
 
+        args[0] = args[0].toLowerCase();
+
+        // check if the submitter has the foresight to use the whole word
+        if (!args[0] === "resolution" || !args[0] === "amendment" || !args[0] === "bill") {
+            switch (args[0]) {
+                case "a":
+                    args[0] = "amendment";
+                    break;
+                case "b":
+                    args[0] = "bill";
+                    break;
+                case "r":
+                    args[0] = "resolution";
+                    break;
+                default:
+                    message.reply("Error 5: Incorrect argument for <type>.\nValid arguments:\n\"a\" for amendments\n\"b\" for bills\n\"r\" for resolutions.");
+                    return;
+            }
+        }
+
         await mongo().then(async mongoose => {
+            const model = mongoose.model("legislation", new Schema({ name: String }));
+            const currentCount = model.countDocuments({ type: args[0], congress: congressNumber });
             try {
-                await new schema.findOneAndUpdate({
-                    // find the document if there is one using the key
-                    _id: "",
-                }, {
-                    _id: "",
-                    // TODO: Make an ID for legislation
-                    // Idea: Type Congress-Number (C.B. 6-01)
-                    url: args[0],
+                const string = "";
+                message.reply(`${args[0]} submitted! The ${args[0]} is now marked as "C.${args[0].slice(0, 1).toUpperCase()}. ${congressNumber}-${toString(currentCount + 1)}`);
+                await new schema({
+                    _id: string.concat("C.", args[0].slice(0, 1).toUpperCase(), ". ", congressNumber, "-", toString(currentCount + 1)),
+                    congress: 6,
+                    type: args[0],
+                    url: args[1],
+                    name: args.splice(0, 2).join(" "),
                     primary_sponsor: member.id,
-                }, {
-                    upsert: true,
-                });
+                }).save();
                 console.log("Added new data");
             } finally {
                 mongoose.connection.close();
             }
         });
     },
-    expectedArgs: "<bill url> <name [optional]>",
+    expectedArgs: "<type> <url> <name [optional]>",
+    help: "",
     permissionError: "You need to be a member of any of the authorized roles according to the Congressional Code.",
-    minArgs: 1,
-    maxArgs: 2,
+    minArgs: 2,
+    maxArgs: null,
     permissions: [],
     rolePermission: [],
 };
