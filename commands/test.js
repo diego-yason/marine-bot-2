@@ -7,7 +7,7 @@ callback
 module.exports = {
     commands: ["test", "ping"],
     callback: (message, arguments, text) => {
-        // put your code here
+        message.reply("Hello");
     },
     expectedArgs: "",
     permissionError: "",
