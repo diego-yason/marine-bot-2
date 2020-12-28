@@ -6,8 +6,9 @@ const client = new Discord.Client();
 
 const { PREFIX } = require("./publicConfig.json");
 const { DISCORD_KEY } = require("./privateConfig.json");
+const mongo = require("./mongo");
 
-client.once("ready", () => {
+client.once("ready", async () => {
 	console.log("Ready!");
 
     const baseFile = "_command_handler.js";
@@ -29,7 +30,15 @@ client.once("ready", () => {
                 commandBase(client, option);
             }
         }
-    }
+    };
+
+    await mongo().then(mongoose => {
+        try {
+            console.log("Connection to MongoDB Established.");
+        } finally {
+            mongoose.connection.close();
+        }
+    });
 
     readCommands("commands");
 });
