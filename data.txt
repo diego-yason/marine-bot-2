@@ -1,0 +1,11 @@
+{
+    "submitted": "MM-DD-YYYY",
+    "status": [
+        {
+            "date": "MM-DD-YYYY",
+            "time": "HH:MM:SS",
+            "action": "submitted",
+            "user": "USERID"
+        }
+    ]
+}
