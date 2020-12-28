@@ -9,16 +9,23 @@ const schema = require("../schemas/submit");
 
 module.exports = {
     commands: ["submit"],
-    callback: async (message, arguments, text) => {
+    callback: async (message, args, text) => {
         const { member } = message;
 
         await mongo().then(async mongoose => {
             try {
-                await new schema({
-                    _number: "1000",
-                    url: "test",
-                    primary_sponsor: "TestUser",
-                }).save();
+                await new schema.findOneAndUpdate({
+                    // find the document if there is one using the key
+                    _id: "",
+                }, {
+                    _id: "",
+                    // TODO: Make an ID for legislation
+                    // Idea: Type Congress-Number (C.B. 6-01)
+                    url: args[0],
+                    primary_sponsor: member.id,
+                }, {
+                    upsert: true,
+                });
                 console.log("Added new data");
             } finally {
                 mongoose.connection.close();
