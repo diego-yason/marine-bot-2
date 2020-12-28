@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const submit = require("../commands/submit");
 
 const reqString = {
     type: String,
@@ -7,9 +6,15 @@ const reqString = {
 };
 
 const submitSchema = mongoose.Schema({
-    _number: reqString,
+    _id: reqString,
     url: reqString,
     primary_sponsor: reqString,
+    cosponsor: {
+        type:Object,
+    },
+    bill: {
+        type:Object,
+    },
 });
 
 module.exports = mongoose.model("legislation", submitSchema);
