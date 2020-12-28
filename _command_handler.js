@@ -64,7 +64,7 @@ module.exports = (client, commandOptions) => {
     try {
         console.log(`Registering command: ${commands[0]}`);
     } catch {
-        console.log(`REGISTRATION FAILED | FILE: ${commandOpt}`)
+        console.log(`REGISTRATION FAILED | FILE: ${commands[0]}`);
     }
     // permissions
     if (permissions.length) {
