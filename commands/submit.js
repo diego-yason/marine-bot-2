@@ -18,10 +18,8 @@ module.exports = {
                     _number: "1000",
                     url: "test",
                     primary_sponsor: "TestUser",
-                });
+                }).save();
                 console.log("Added new data");
-            } catch (e) {
-                console.log("wait nevermined, theres an error" + e);
             } finally {
                 mongoose.connection.close();
             }
