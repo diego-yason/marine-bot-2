@@ -17,6 +17,8 @@ client.once("ready", async () => {
     const baseFile = "_command_handler.js";
     const commandBase = require(`./${baseFile}`);
 
+    // Read the files
+    // NOTE: It's recursive, it'll read subfolders also
     const readCommands = dir => {
         const files = fs.readdirSync(path.join(__dirname, dir));
 
@@ -35,6 +37,8 @@ client.once("ready", async () => {
         }
     };
 
+    // Connect the bot to the MongoDB local server
+    // Should I move to a cloud server :thinking:
     await mongo().then(mongoose => {
         try {
             console.log("Connection to MongoDB Established.");
@@ -46,6 +50,7 @@ client.once("ready", async () => {
     readCommands("commands");
 });
 
+// Question to self: Why?
 client.on("userUpdate", async (OldUser, NewUser) => {
     const { id, tagOld } = OldUser;
     const { tagNew } = NewUser;
