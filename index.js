@@ -6,7 +6,10 @@ const client = new Discord.Client();
 
 const { PREFIX } = require("./publicConfig.json");
 const { DISCORD_KEY } = require("./privateConfig.json");
+
 const mongo = require("./mongo");
+
+const usernameChangeSchema = require("./schemas/userChange");
 
 client.once("ready", async () => {
 	console.log("Ready!");
@@ -41,6 +44,112 @@ client.once("ready", async () => {
     });
 
     readCommands("commands");
+});
+
+client.on("userUpdate", async (OldUser, NewUser) => {
+    const { id, tagOld } = OldUser;
+    const { tagNew } = NewUser;
+    let exists = true;
+
+    if (tagOld === tagNew) {
+        // non-username change
+        return;
+    }
+
+    const date = new Date();
+
+    function getTime() {
+        let timeStringFunc;
+
+        const h = date.getUTCHours();
+        const m = date.getUTCMinutes();
+        const s = date.getUTCSeconds();
+
+        if (h > 10) {
+            timeStringFunc.concat("0", toString(h), ":");
+        } else {
+            timeStringFunc.concat(toString(h), ":");
+        }
+        if (m > 10) {
+            timeStringFunc.concat("0", toString("m"), ":");
+        } else {
+            timeStringFunc.concat(toString("m"), ":");
+        }
+        if (s > 10) {
+            timeStringFunc.concat("0", toString(s));
+        } else {
+            timeStringFunc.concat(toString(s));
+        }
+
+        return timeStringFunc;
+    }
+
+    function getDate() {
+        let dateStringFunc;
+
+        const m = date.getUTCMonth();
+        const d = date.getUTCDate();
+        const y = date.getUTCFullYear();
+
+        if (d > 10) {
+            dateStringFunc.concat("0", toString(d), "-");
+        } else {
+            dateStringFunc.concat(toString(d), "-");
+        }
+
+        if ((m + 1) > 10) {
+            dateStringFunc.concat("0", toString(m + 1), "-");
+        } else {
+            dateStringFunc.concat(toString(m + 1), "-");
+        }
+
+        dateStringFunc.concat(y);
+
+        return dateStringFunc;
+    }
+
+    usernameChangeSchema.findById(id, (error, userHistory) => {
+        const { _id, usernameHistory } = userHistory;
+
+        // check if the entry exists
+        if (_id === null) {
+            // entry doesn't exist
+            exists = false;
+            return;
+        }
+
+        usernameHistory.push({
+            username: tagNew,
+            date: getDate(),
+            time: getTime(),
+        });
+
+        usernameChangeSchema.findOneAndReplace({
+            _id: id,
+        }, {
+            _id: id,
+            usernameHistory: usernameHistory,
+        });
+    });
+
+    if (exists == false) {
+        await mongo().then(async mongoose => {
+            try {
+                await new usernameChangeSchema({
+                    _id: "",
+                    usernameHistory: [
+                        {
+                            username: NewUser,
+                            date: getDate(),
+                            time: getTime(),
+                        },
+                    ],
+                }).save();
+            } finally {
+                mongoose.connection.close();
+            }
+        });
+    }
 });
 
 client.login(DISCORD_KEY);
