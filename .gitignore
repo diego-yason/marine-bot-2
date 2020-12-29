@@ -2,5 +2,6 @@ privateConfig.json
 
 openbot.command
 openbot.exe.lnk
+database.exe.lnk
 
 .DS_Store

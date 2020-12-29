@@ -15,6 +15,10 @@ const submitSchema = mongoose.Schema({
     bill: {
         type:Object,
     },
+    type: reqString,
+    name: {
+        type:String,
+    },
 });
 
 // TODO: Add options for flexibility
