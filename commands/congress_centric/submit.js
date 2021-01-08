@@ -5,8 +5,8 @@ callback
 */
 
 const { Schema } = require("mongoose");
-const mongo = require("../mongo");
-const schema = require("../schemas/submit");
+const mongo = require("../../mongo");
+const schema = require("../../schemas/submit");
 
 const congressNumber = "6";
 
@@ -66,5 +66,5 @@ module.exports = {
     minArgs: 2,
     maxArgs: null,
     permissions: [],
-    rolePermission: ["Federalist Representative"],
+    rolePermission: ["Federalist Representative", "Supreme Chancellor of the Federalist Republic"],
 };

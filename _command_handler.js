@@ -97,6 +97,7 @@ module.exports = (client, commandOptions) => {
                 }
 
                 // check if the member has the role/s needed
+                let hasRole;
                 for (const roleRequired of rolePermission) {
                     const role = guild.roles.cache.find(guildRole => guildRole.name === roleRequired);
 
@@ -106,12 +107,19 @@ module.exports = (client, commandOptions) => {
                         return;
                     }
 
-                    // the role exists, but the member doesn't have it
-                    if (!member.roles.cache.has(role.id)) {
-                        message.reply("Error 2: You do not have the required role.");
-                        return;
+                    // the role exists and the member has it
+                    if (member.roles.cache.has(role.id)) {
+                        hasRole = true;
                     }
                 }
+
+                // Member has none of the roles, command not granted
+                if (hasRole == false && rolePermission.length > 0) {
+                    message.reply("Error 2: You do not have the required role.");
+                    return;
+                }
+
+                // END OF CHECKER, ACTUAL CODE RUNS BELOW
 
                 // make args
                 const args = content.split(/[ ]+/);
