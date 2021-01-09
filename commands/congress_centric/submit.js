@@ -8,7 +8,7 @@ const { Schema } = require("mongoose");
 const mongo = require("../../mongo");
 const schema = require("../../schemas/submit");
 
-const congressNumber = "6";
+const { CONGRESS_NUMBER } = require("../../publicConfig.json");
 
 const localSchema = new Schema({ type: String });
 
@@ -44,9 +44,9 @@ module.exports = {
                     const count = countDoc + 1;
                     try {
                         const string = "";
-                        message.reply(`${args[0]} submitted! The ${args[0]} is now marked as "C.${args[0].slice(0, 1).toUpperCase()}. ${congressNumber}-${count}`);
+                        message.reply(`${args[0]} submitted! The ${args[0]} is now marked as "C.${args[0].slice(0, 1).toUpperCase()}. ${CONGRESS_NUMBER}-${count}`);
                         await new schema({
-                            _id: string.concat("C.", args[0].slice(0, 1).toUpperCase(), ". ", congressNumber, "-", count),
+                            _id: string.concat("C.", args[0].slice(0, 1).toUpperCase(), ". ", CONGRESS_NUMBER, "-", count),
                             congress: 6,
                             type: args[0],
                             url: args[1],
