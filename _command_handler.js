@@ -97,13 +97,16 @@ module.exports = (client, commandOptions) => {
                 }
 
                 // check if the member has the role/s needed
-                let hasRole;
+                // hasRole so member only needs one of the roles
+                // If you want to require all roles, this section
+                // has to be updated to accept an option
+                let hasRole = false;
                 for (const roleRequired of rolePermission) {
                     const role = guild.roles.cache.find(guildRole => guildRole.name === roleRequired);
 
                     // if the role doesn't exist
-                    if (!role) {
-                        message.reply("Error 1: Role does not exist, ask your admin to add the role required.");
+                    if (!role && hasRole == false) {
+                        message.reply("Error 1: Role does not exist, ask your admin to create the role required.");
                         return;
                     }
 
