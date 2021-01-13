@@ -51,6 +51,8 @@ client.once("ready", async () => {
 });
 
 // Question to self: Why?
+// Answered on Jan 13, man idk
+/*
 client.on("userUpdate", async (OldUser, NewUser) => {
     const { id, tagOld } = OldUser;
     const { tagNew } = NewUser;
@@ -156,5 +158,5 @@ client.on("userUpdate", async (OldUser, NewUser) => {
         });
     }
 });
-
+*/
 client.login(DISCORD_KEY);
