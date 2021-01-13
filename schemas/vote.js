@@ -13,6 +13,10 @@ const voteSchema = mongoose.Schema({
         The votes will be in this format, 0 being the 1st preference
         ["KingMarine", "Federalist", "OtherFederalist", "ADrewster"]
     */
+    election: {
+        type: Number,
+        required: true,
+    },
 });
 
-module.exports = mongoose.model("username-history", voteSchema);
+module.exports = mongoose.model("votes", voteSchema);
