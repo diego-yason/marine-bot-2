@@ -61,7 +61,7 @@ module.exports = {
         });
     },
     expectedArgs: "<type> <url> <name [optional]>",
-    help: "",
+    help: "For the `type` argument, you can use the following options:",
     permissionError: "You need to be a member of any of the authorized roles according to the Congressional Code.",
     minArgs: 2,
     maxArgs: null,

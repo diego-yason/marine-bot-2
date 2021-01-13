@@ -113,6 +113,7 @@ module.exports = (client, commandOptions) => {
                     // the role exists and the member has it
                     if (member.roles.cache.has(role.id)) {
                         hasRole = true;
+                        console.log("yeah the dude got a role");
                     }
                 }
 
@@ -121,6 +122,8 @@ module.exports = (client, commandOptions) => {
                     message.reply("Error 2: You do not have the required role.");
                     return;
                 }
+
+                console.log("command is authorized for processing");
 
                 // END OF CHECKER, ACTUAL CODE RUNS BELOW
 
