@@ -38,26 +38,30 @@ module.exports = {
         }
 
         await mongo().then(async mongoose => {
-            const model = mongoose.model("legislation", localSchema);
-                model.countDocuments({ type: args[0] }, async (err, countDoc) => {
-                    console.log(countDoc);
-                    const count = countDoc + 1;
-                    try {
-                        const string = "";
-                        message.reply(`${args[0]} submitted! The ${args[0]} is now marked as "C.${args[0].slice(0, 1).toUpperCase()}. ${CONGRESS_NUMBER}-${count}`);
-                        await new schema({
-                            _id: string.concat("C.", args[0].slice(0, 1).toUpperCase(), ". ", CONGRESS_NUMBER, "-", count),
-                            congress: 6,
-                            type: args[0],
-                            url: args[1],
-                            name: args.splice(0, 2).join(" "),
-                            primary_sponsor: member.id,
-                        }).save();
-                        console.log("Added new data");
-                    } finally {
-                        mongoose.connection.close();
-                    }
-            });
+            const model = (await mongo()).model('legislation', localSchema);
+            const count = await model.countDocuments({ type: args[0] }) + 1;
+            
+            // this is required because of i use slice and 
+            // i moved some code around in this section
+            const typeWhole = args[0];
+            const typeLetter = args[0].slice(0, 1).toUpperCase();
+            console.log(count);
+            try {
+                await new schema({
+                    _id: "C." + args[0].slice(0, 1).toUpperCase() + ". " + CONGRESS_NUMBER + "-" + count,
+                    congress: 6,
+                    type: args[0],
+                    url: args[1],
+                    name: args.splice(0, 2).join(" "),
+                    primary_sponsor: member.id,
+                }).save();
+                console.log("Added new data");
+            } catch(e) {
+                message.channel.send(`Error occured: ${e} | Calling <@197305044834451456>`);
+            } finally {
+                message.reply(`${typeWhole.toUpperCase()} submitted! The ${typeWhole} is now marked as "C.${typeLetter}. ${CONGRESS_NUMBER}-${count}`);
+                mongoose.connection.close();
+            }
         });
     },
     expectedArgs: "<type> <url> <name [optional]>",
