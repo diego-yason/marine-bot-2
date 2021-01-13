@@ -10,6 +10,7 @@ const { DISCORD_KEY } = require("./privateConfig.json");
 const mongo = require("./mongo");
 
 const usernameChangeSchema = require("./schemas/userChange");
+const { error } = require("console");
 
 client.once("ready", async () => {
 	console.log("Ready!");
@@ -42,6 +43,8 @@ client.once("ready", async () => {
     await mongo().then(mongoose => {
         try {
             console.log("Connection to MongoDB Established.");
+        } catch {
+            throw new Error("Connection failed, check if the server is up");
         } finally {
             mongoose.connection.close();
         }
