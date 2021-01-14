@@ -111,7 +111,7 @@ module.exports = (client, commandOptions) => {
     }
 
     // if maxArgs isn't a number or null ("undefined")
-    if (typeof maxArgs != "number" || typeof maxArgs != undefined) {
+    if (typeof maxArgs != "number" && typeof maxArgs != undefined) {
         throw new Error(`ERROR: ${commands[0]}'s maxArgs value is not null or a number.`);
     }
 
