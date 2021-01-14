@@ -83,7 +83,7 @@ module.exports = (client, commandOptions) => {
             permissions = [permissions];
         // if permissions isn't a string or array
         } else if (typeof permissions != "object") {
-            throw new Error(`ERROR: ${commands[0]}'s permissions value is not a string or array`);
+            throw new Error(`ERROR: ${commands[0]}'s permissions value is not a string or array | ${permissions}`);
         }
 
         validatePermissions(permissions);
@@ -96,7 +96,7 @@ module.exports = (client, commandOptions) => {
             rolePermission = [rolePermission];
         // if permissions isn't a string or array
         } else if (typeof rolePermission != "object") {
-            throw new Error(`ERROR: ${commands[0]}'s rolePermission value is not a string or array`);
+            throw new Error(`ERROR: ${commands[0]}'s rolePermission value is not a string or array | ${rolePermission}`);
         }
     }
 
@@ -107,12 +107,12 @@ module.exports = (client, commandOptions) => {
     // minArgs's default is 0, so if you didn't do anything,
     // this shouldn't be a problem
     if (typeof minArgs != "number") {
-        throw new Error(`ERROR: ${commands[0]}'s minArgs value is not a number.`);
+        throw new Error(`ERROR: ${commands[0]}'s minArgs value is not a number. | ${minArgs}`);
     }
 
     // if maxArgs isn't a number or null ("undefined")
     if (typeof maxArgs != "number" && typeof maxArgs != undefined) {
-        throw new Error(`ERROR: ${commands[0]}'s maxArgs value is not null or a number.`);
+        throw new Error(`ERROR: ${commands[0]}'s maxArgs value is not null or a number. | ${maxArgs}`);
     }
 
     // callback check
@@ -121,11 +121,11 @@ module.exports = (client, commandOptions) => {
     }
 
     if (typeof allRoles != "boolean") {
-        throw new Error(`ERROR: ${commands[0]}'s allRoles value is not a boolean`);
+        throw new Error(`ERROR: ${commands[0]}'s allRoles value is not a boolean | ${allRoles}`);
     }
 
     if (typeof allPermissions != "boolean") {
-        throw new Error(`ERROR: ${commands[0]}'s allPermissions value is not a boolean`);
+        throw new Error(`ERROR: ${commands[0]}'s allPermissions value is not a boolean | ${allPermissions}`);
     }
 
     // Everything seems to be in order
