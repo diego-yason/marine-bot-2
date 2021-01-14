@@ -1,7 +1,12 @@
 /* eslint-disable prefer-const */
+const { Error } = require("mongoose");
 const { PREFIX } = require("./publicConfig.json");
 
 const validatePermissions = (permissions) => {
+    // This is a list of all discord-level
+    // permissions, use this for stuff that
+    // you want to check that those using the command
+    // already can do by themselves
     const validPermissions = [
         "CREATE_INSTANT_INVITE",
         "KICK_MEMBERS",
@@ -44,10 +49,16 @@ const validatePermissions = (permissions) => {
 };
 
 module.exports = (client, commandOptions) => {
+    // if you add in another property, make sure you
+    // add it into this, if there is a default
+    // value you want to use, do something like
+    // SpecialProperty = null,
+    // otherwise just make it
+    // SpecialProperty
     let {
         commands,
-        expectedArgs = "",
-        permissionError = "No.",
+        expectedArgs = "Expected Args not given in command file.",
+        permissionError = "No permission. Command file doesn't give any error messages, this is just default.",
         minArgs = 0,
         maxArgs = null,
         permissions = [],
@@ -59,22 +70,56 @@ module.exports = (client, commandOptions) => {
     // commands
     if (typeof commands === "string") {
         commands = [commands];
-    }
-
-    try {
-        console.log(`Registering command: ${commands[0]}`);
-    } catch {
-        console.log(`REGISTRATION FAILED | FILE: ${commands[0]}`);
+    } else if (typeof commands != "object") {
+        throw new Error("Error: Command is invalid, commandOptions:" + commandOptions);
     }
 
     // permissions
     if (permissions.length) {
+        // convert to array
         if (typeof permissions === "string") {
             permissions = [permissions];
+        // if permissions isn't a string or array
+        } else if (typeof permissions != "object") {
+            throw new Error(`ERROR: ${commands[0]}'s permissions value is invalid`);
         }
 
         validatePermissions(permissions);
     }
+
+    // discord roles
+    if (rolePermission.length) {
+        // convert to array
+        if (typeof rolePermission == "string") {
+            rolePermission = [rolePermission];
+        // if permissions isn't a string or array
+        } else if (typeof rolePermission != "object") {
+            throw new Error(`ERROR: ${commands[0]}'s rolePermission value is invalid`);
+        }
+    }
+
+    // TYPE CHECK SECTION
+    // if you're adding a special property and would like
+    // to type check, this is the place to put it
+
+    // minArgs's default is 0, so if you didn't do anything,
+    // this shouldn't be a problem
+    if (typeof minArgs != Number) {
+        throw new Error(`ERROR: ${commands[0]}'s minArgs value is invalid.`);
+    }
+
+    // if maxArgs isn't a number or null ("undefined")
+    if (typeof maxArgs != Number || typeof maxArgs != undefined) {
+        throw new Error(`ERROR: ${commands[0]}'s maxArgs value is invalid.`);
+    }
+
+    // callback check
+    if (typeof callback != "function") {
+        throw new Error(`ERROR: ${commands[0]}'s callback is invalid.`);
+    }
+    // Everything seems to be in order
+
+    console.log(`Registering command: ${commands[0]}`);
 
     client.on("message", message => {
 
@@ -101,6 +146,7 @@ module.exports = (client, commandOptions) => {
                 // If you want to require all roles, this section
                 // has to be updated to accept an option
                 let hasRole = false;
+
                 for (const roleRequired of rolePermission) {
                     const role = guild.roles.cache.find(guildRole => guildRole.name === roleRequired);
 

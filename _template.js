@@ -9,10 +9,19 @@ module.exports = {
     callback: (message, arguments, text) => {
         // put your code here
     },
+};
+
+/*
+
+    You can add the following to the table above:
+
     expectedArgs: "",
+    Give error message if someone didn't give the right args
+
     permissionError: "",
+    Give error message if someone doesn't have the right
+    permission (discord permission or server role)
+
     minArgs: 0,
-    maxArgs: null,
-    permissions: [], // discord permissions, check discordpermissions.txt for the list
-    rolePermission: [],
-}
+    Minimum arguments
+*/
