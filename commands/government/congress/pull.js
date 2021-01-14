@@ -1,18 +1,11 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 module.exports = {
-    commands: [],
+    commands: ["pull"],
     callback: (message, arguments, text) => {
         // put your code here
     },
-    expectedArgs: "",
+    expectedArgs: "<legislation number>",
     permissionError: "Only sponsors may pull bills. (Submitter)",
-    minArgs: 0,
-    maxArgs: null,
-    permissions: [], // discord permissions, check discordpermissions.txt for the list
+    minArgs: 1,
+    maxArgs: 1,
     rolePermission: ["Federalist Representative", "Supreme Chancellor of the Federalist Republic"],
-}
+};

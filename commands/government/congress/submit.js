@@ -5,10 +5,10 @@ callback
 */
 
 const { Schema } = require("mongoose");
-const mongo = require("../../mongo");
-const schema = require("../../schemas/submit");
+const mongo = require("../../../mongo");
+const schema = require("../../../schemas/submit");
 
-const { CONGRESS_NUMBER } = require("../../publicConfig.json");
+const { CONGRESS_NUMBER } = require("../../../publicConfig.json");
 
 const localSchema = new Schema({ type: String });
 
@@ -65,10 +65,8 @@ module.exports = {
         });
     },
     expectedArgs: "<type> <url> <name [optional]>",
-    help: "For the `type` argument, you can use the following options:",
+    help: "For the `type` argument, you can use the following options:\n`a` for amendments\n`b` for bills\n`r` for resolutions.\nNote: If you want, you can type the whole word instead of the letter.",
     permissionError: "You need to be a member of any of the authorized roles according to the Congressional Code.",
     minArgs: 2,
-    maxArgs: null,
-    permissions: [],
     rolePermission: ["Federalist Representative", "Supreme Chancellor of the Federalist Republic"],
 };

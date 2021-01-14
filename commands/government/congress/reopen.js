@@ -7,14 +7,13 @@ callback
 // In case they accidentally close the wrong legislation lol
 
 module.exports = {
-    commands: [],
+    commands: ["reopen"],
     callback: (message, arguments, text) => {
         // put your code here
     },
     expectedArgs: "",
     permissionError: "",
-    minArgs: 0,
-    maxArgs: null,
-    permissions: [], // discord permissions, check discordpermissions.txt for the list
+    minArgs: 1,
+    maxArgs: 1,
     rolePermission: ["Speaker of the Federalst Congress", "Speaker Pro Tempore"],
-}
+};
