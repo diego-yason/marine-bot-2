@@ -57,13 +57,15 @@ module.exports = (client, commandOptions) => {
     // SpecialProperty
     let {
         commands,
+        callback,
         expectedArgs = "Expected Args not given in command file.",
         permissionError = "No permission. Command file doesn't give any error messages, this is just default.",
         minArgs = 0,
         maxArgs = null,
         permissions = [],
         rolePermission = [],
-        callback,
+        allPermissions = false,
+        allRoles = false,
     } = commandOptions;
 
     // make stuff into an array
@@ -71,7 +73,7 @@ module.exports = (client, commandOptions) => {
     if (typeof commands === "string") {
         commands = [commands];
     } else if (typeof commands != "object") {
-        throw new Error("Error: Command is invalid, commandOptions:" + commandOptions);
+        throw new Error("Error: Command is invalid, commandOptions:" + commandOptions + "\n Must be a string or array");
     }
 
     // permissions
@@ -81,7 +83,7 @@ module.exports = (client, commandOptions) => {
             permissions = [permissions];
         // if permissions isn't a string or array
         } else if (typeof permissions != "object") {
-            throw new Error(`ERROR: ${commands[0]}'s permissions value is invalid`);
+            throw new Error(`ERROR: ${commands[0]}'s permissions value is not a string or array`);
         }
 
         validatePermissions(permissions);
@@ -94,7 +96,7 @@ module.exports = (client, commandOptions) => {
             rolePermission = [rolePermission];
         // if permissions isn't a string or array
         } else if (typeof rolePermission != "object") {
-            throw new Error(`ERROR: ${commands[0]}'s rolePermission value is invalid`);
+            throw new Error(`ERROR: ${commands[0]}'s rolePermission value is not a string or array`);
         }
     }
 
@@ -105,18 +107,27 @@ module.exports = (client, commandOptions) => {
     // minArgs's default is 0, so if you didn't do anything,
     // this shouldn't be a problem
     if (typeof minArgs != Number) {
-        throw new Error(`ERROR: ${commands[0]}'s minArgs value is invalid.`);
+        throw new Error(`ERROR: ${commands[0]}'s minArgs value is not a number.`);
     }
 
     // if maxArgs isn't a number or null ("undefined")
     if (typeof maxArgs != Number || typeof maxArgs != undefined) {
-        throw new Error(`ERROR: ${commands[0]}'s maxArgs value is invalid.`);
+        throw new Error(`ERROR: ${commands[0]}'s maxArgs value is not null or a number.`);
     }
 
     // callback check
     if (typeof callback != "function") {
         throw new Error(`ERROR: ${commands[0]}'s callback is invalid.`);
     }
+
+    if (typeof allRoles != "boolean") {
+        throw new Error(`ERROR: ${commands[0]}'s allRoles value is not a boolean`);
+    }
+
+    if (typeof allPermissions != "boolean") {
+        throw new Error(`ERROR: ${commands[0]}'s allPermissions value is not a boolean`);
+    }
+
     // Everything seems to be in order
 
     console.log(`Registering command: ${commands[0]}`);
@@ -134,6 +145,7 @@ module.exports = (client, commandOptions) => {
 
                 // check if the member has the correct permissions
                 // it gets skipped if its an empty array
+                // TODO: Add support for allPermissions
                 for (const permission of permissions) {
                     if (!member.hasPermission(permission)) {
                         message.reply(permissionError);
@@ -145,6 +157,7 @@ module.exports = (client, commandOptions) => {
                 // hasRole so member only needs one of the roles
                 // If you want to require all roles, this section
                 // has to be updated to accept an option
+                // TODO: Add support for allRoles
                 let hasRole = false;
 
                 for (const roleRequired of rolePermission) {
