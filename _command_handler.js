@@ -106,12 +106,12 @@ module.exports = (client, commandOptions) => {
 
     // minArgs's default is 0, so if you didn't do anything,
     // this shouldn't be a problem
-    if (typeof minArgs != Number) {
+    if (typeof minArgs != "number") {
         throw new Error(`ERROR: ${commands[0]}'s minArgs value is not a number.`);
     }
 
     // if maxArgs isn't a number or null ("undefined")
-    if (typeof maxArgs != Number || typeof maxArgs != undefined) {
+    if (typeof maxArgs != "number" || typeof maxArgs != undefined) {
         throw new Error(`ERROR: ${commands[0]}'s maxArgs value is not null or a number.`);
     }
 
