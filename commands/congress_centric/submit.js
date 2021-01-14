@@ -59,7 +59,7 @@ module.exports = {
             } catch (e) {
                 message.channel.send(`Error occured: ${e} | Calling <@197305044834451456>`);
             } finally {
-                message.reply(`${typeWhole.toUpperCase()} submitted! The ${typeWhole} is now marked as "C.${typeLetter}. ${CONGRESS_NUMBER}-${count}`);
+                message.reply(`${typeWhole.toUpperCase()} submitted! The ${typeWhole} is now marked as "C.${typeLetter}. ${CONGRESS_NUMBER}-${count}"`);
                 mongoose.connection.close();
             }
         });
