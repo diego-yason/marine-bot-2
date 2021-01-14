@@ -12,3 +12,6 @@ const userChangeSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model("username-history", userChangeSchema);
+
+// this doesn't really have much use anymore since i disabled the code
+// that was using this
