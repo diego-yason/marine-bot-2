@@ -4,16 +4,12 @@ const fs = require("fs");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
-const { PREFIX } = require("./publicConfig.json");
 const { DISCORD_KEY } = require("./privateConfig.json");
 
 const mongo = require("./mongo");
 
-const usernameChangeSchema = require("./schemas/userChange");
-const { error } = require("console");
-
 client.once("ready", async () => {
-	console.log("Ready!");
+    console.log("Ready!");
 
     const baseFile = "_command_handler.js";
     const commandBase = require(`./${baseFile}`);
@@ -33,7 +29,11 @@ client.once("ready", async () => {
 
                 console.log(file, option);
 
-                commandBase(client, option);
+                try {
+                    commandBase(client, option);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
     };
