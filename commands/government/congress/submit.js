@@ -20,7 +20,7 @@ module.exports = {
         args[0] = args[0].toLowerCase();
 
         // check if the submitter has the foresight to use the whole word
-        if (args[0] !== "resolution" && args[0] !== "amendment" && args[0] !== "bill") {
+        if (args[0] !== "resolution" && args[0] !== "amendment" && args[0] !== "bill" && args[0] !== "impeachment") {
             switch (args[0]) {
                 case "a":
                     args[0] = "amendment";
@@ -31,8 +31,11 @@ module.exports = {
                 case "r":
                     args[0] = "resolution";
                     break;
+                case "i":
+                    args[0] = "impeachment";
+                    break;
                 default:
-                    message.reply("Error 5: Incorrect argument for <type>.\nValid arguments:\n`a` for amendments\n`b` for bills\n`r` for resolutions.\nNote: If you want, you can type the whole word instead of the letter.");
+                    message.reply("Error 5: Incorrect argument for <type>.\nValid arguments:\n`a` for amendments\n`b` for bills\n`r` for resolutions.\n`i` for impeachment\nNote: If you want, you can type the whole word instead of the letter.");
                     return;
             }
         }

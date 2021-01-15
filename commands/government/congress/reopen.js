@@ -1,9 +1,3 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 // In case they accidentally close the wrong legislation lol
 
 module.exports = {
@@ -11,7 +5,7 @@ module.exports = {
     callback: (message, arguments, text) => {
         // put your code here
     },
-    expectedArgs: "",
+    expectedArgs: "<legislation number>",
     permissionError: "",
     minArgs: 1,
     maxArgs: 1,
