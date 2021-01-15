@@ -49,10 +49,10 @@ module.exports = {
             try {
                 await new schema({
                     _id: "C." + args[0].slice(0, 1).toUpperCase() + ". " + CONGRESS_NUMBER + "-" + count,
-                    congress: 6,
+                    congress: CONGRESS_NUMBER,
                     type: args[0],
                     url: args[1],
-                    name: args.splice(0, 2).join(" "),
+                    name: args.splice(1).join(" "),
                     primary_sponsor: member.id,
                 }).save();
                 console.log("Added new data");
