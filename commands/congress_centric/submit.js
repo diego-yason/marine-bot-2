@@ -66,10 +66,10 @@ module.exports = {
         }
 
         await mongo().then(async mongoose => {
-            const model = (await mongo()).model('legislation', localSchema);
+            const model = (await mongo()).model("legislation", localSchema);
             const count = await model.countDocuments({ type: args[0] }) + 1;
-            
-            // this is required because of i use slice and 
+
+            // this is required because of i use slice and
             // i moved some code around in this section
             const typeWhole = args[0];
             const typeLetter = args[0].slice(0, 1).toUpperCase();
@@ -84,7 +84,7 @@ module.exports = {
                     primary_sponsor: member.id,
                 }).save();
                 console.log("Added new data");
-            } catch(e) {
+            } catch (e) {
                 message.channel.send(`Error occured: ${e} | Calling <@197305044834451456>`);
             } finally {
                 message.reply(`${typeWhole.toUpperCase()} submitted! The ${typeWhole} is now marked as "C.${typeLetter}. ${CONGRESS_NUMBER}-${count}`);
