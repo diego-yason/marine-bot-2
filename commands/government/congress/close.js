@@ -1,7 +1,12 @@
+const mongoose = require("mongoose");
+const mongo = require("../../../mongo");
+
 module.exports = {
     commands: ["close"],
-    callback: (message, arguments, text) => {
-        // put your code here
+    callback: async (message, arguments, text) => {
+        await mongo().then(async mongo => {
+            
+        })
     },
     expectedArgs: "<number> <result `(p)assed | (f)ailed | (t)abled`> <additional details (optional)>",
     permissionError: "Only the Speaker and their deputies may declare legislation closed.",
