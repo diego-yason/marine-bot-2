@@ -4,13 +4,47 @@ commands
 callback
 */
 
+const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
+<<<<<<< Updated upstream:commands/congress_centric/submit.js
 const mongo = require("../../mongo");
 const schema = require("../../schemas/submit");
+=======
+const mongo = require("../../../mongo");
+>>>>>>> Stashed changes:commands/government/congress/submit.js
 
 const { CONGRESS_NUMBER } = require("../../publicConfig.json");
 
 const localSchema = new Schema({ type: String });
+
+
+const schema = mongoose.model("legislations", mongoose.Schema({
+    _id: {
+        type: String,
+        required: true,
+    },
+    url: {
+        type: String,
+        required: true,
+    },
+    primary_sponsor: {
+        type: String,
+        required: true,
+    },
+    cosponsor: {
+        type:Object,
+    },
+    bill: {
+        type:Object,
+    },
+    type: {
+        type: String,
+        required: true,
+    },
+    name: {
+        type:String,
+    },
+}));
 
 module.exports = {
     commands: ["submit"],
