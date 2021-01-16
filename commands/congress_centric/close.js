@@ -7,7 +7,9 @@ callback
 module.exports = {
     commands: [],
     callback: (message, arguments, text) => {
-        // put your code here
+        const { member } = message;
+
+        
     },
     expectedArgs: "<number> <result `(p)assed | (f)ailed | (t)abled> <additional details (optional)>",
     permissionError: "Only the Speaker and their deputies may declare legislation closed.",
