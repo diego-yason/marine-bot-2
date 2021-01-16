@@ -9,7 +9,7 @@ module.exports = {
     callback: (message, arguments, text) => {
         const { member } = message;
 
-        
+
     },
     expectedArgs: "<number> <result `(p)assed | (f)ailed | (t)abled> <additional details (optional)>",
     permissionError: "Only the Speaker and their deputies may declare legislation closed.",
