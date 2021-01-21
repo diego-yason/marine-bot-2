@@ -46,5 +46,18 @@ module.exports = {
     Require user to have all roles listed in
     rolePermission array
 
+    dmOnly: Boolean,
+    Default: false
+    Command can only work in dm only
+
+    isDmAllowed: Boolean,
+    Default: false
+    IMPORTANT: MUST BE TRUE IF "dmOnly" IS TRUE
+    Command *can* work with dm
+
+    serverOnly: Boolean,
+    Default: false
+    Command only works when used in a server
+
     If you wish to add your own property, you need to also add in some lines in ./_command_handler.js
 */

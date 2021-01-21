@@ -3,7 +3,7 @@
 module.exports = {
     commands: ["reopen"],
     callback: (message, arguments, text) => {
-        // put your code here
+        
     },
     expectedArgs: "<legislation number>",
     permissionError: "",
