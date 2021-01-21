@@ -1,9 +1,3 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 const { Schema } = require("mongoose");
 const mongo = require("../../../mongo");
 const schema = require("../../../schemas/submit");
