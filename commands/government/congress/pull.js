@@ -1,4 +1,6 @@
-const { CONGRES_NUMBER } = require("../../../publicConfig.json");
+const rfr = require("rfr");
+
+const { CONGRES_NUMBER } = rfr("publicConfig.json");
 
 module.exports = {
     commands: ["pull"],

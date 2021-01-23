@@ -1,5 +1,6 @@
+const rfr = require("rfr");
 const mongoose = require("mongoose");
-const mongo = require("../../../mongo");
+const mongo = rfr("mongo.js");
 
 module.exports = {
     commands: ["close"],

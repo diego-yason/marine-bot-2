@@ -1,11 +1,6 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
-const mongo = require("../../mongo");
-const schema = require("../../schemas/vote");
+const rfr = require("rfr");
+const mongo = rfr("mongo.js");
+const schema = rfr("schemas/vote.js");
 
 module.exports = {
     commands: [],

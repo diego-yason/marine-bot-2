@@ -8,6 +8,10 @@ const { DISCORD_KEY } = require("./privateConfig.json");
 
 const mongo = require("./mongo");
 
+// set the root to the project folder using rfr
+const rfr = require("rfr");
+rfr.setRoot(__dirname);
+
 client.once("ready", async () => {
     console.log("Ready!");
 

@@ -1,12 +1,6 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 module.exports = {
     commands: ["test", "ping"],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         message.reply("Hello");
     },
     expectedArgs: "",

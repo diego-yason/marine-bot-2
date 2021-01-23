@@ -1,8 +1,10 @@
-const { Schema } = require("mongoose");
-const mongo = require("../../../mongo");
-const schema = require("../../../schemas/submit");
+const rfr = require("rfr");
 
-const { CONGRESS_NUMBER } = require("../../../publicConfig.json");
+const { Schema } = require("mongoose");
+const mongo = rfr("mongo.js");
+const schema = rfr("schemas/submit.js");
+
+const { CONGRESS_NUMBER } = rfr("publicConfig.json");
 
 const localSchema = new Schema({ type: String });
 

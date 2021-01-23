@@ -1,12 +1,6 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 module.exports = {
     commands: ["register"],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         // code
     },
     expectedArgs: "",
