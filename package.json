@@ -18,6 +18,7 @@
   "homepage": "https://github.com/KingMarine-GH/marine-bot-2#readme",
   "dependencies": {
     "discord.js": "^12.5.1",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "rfr": "^1.2.3"
   }
 }
