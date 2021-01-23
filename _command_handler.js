@@ -1,5 +1,4 @@
 /* eslint-disable prefer-const */
-const { Error } = require("mongoose");
 const { PREFIX } = require("./publicConfig.json");
 
 const validatePermissions = (permissions) => {
@@ -43,7 +42,7 @@ const validatePermissions = (permissions) => {
 
     for (const permission of permissions) {
         if (!validPermissions.includes(permission)) {
-            throw new Error(`Error 0: Permission "${permission}" doesn't exist.`);
+            throw new TypeError(`Error 0: Permission "${permission}" doesn't exist.`);
         }
     }
 };
@@ -76,7 +75,7 @@ module.exports = (client, commandOptions) => {
     if (typeof commands === "string") {
         commands = [commands];
     } else if (typeof commands != "object") {
-        throw new Error("Error: Command is invalid, commandOptions:" + commandOptions + "\n Must be a string or array");
+        throw new TypeError(`Command is invalid, commandOptions: "${commandOptions}"\n Must be a string or array`);
     }
 
     // permissions
@@ -86,7 +85,7 @@ module.exports = (client, commandOptions) => {
             permissions = [permissions];
         // if permissions isn't a string or array
         } else if (typeof permissions != "object") {
-            throw new Error(`ERROR: ${commands[0]}'s permissions value is not a string or array | ${permissions}`);
+            throw new TypeError(`${commands[0]}'s permissions value is not a string or array | ${permissions}`);
         }
 
         validatePermissions(permissions);
@@ -99,7 +98,7 @@ module.exports = (client, commandOptions) => {
             rolePermission = [rolePermission];
         // if permissions isn't a string or array
         } else if (typeof rolePermission != "object") {
-            throw new Error(`ERROR: ${commands[0]}'s rolePermission value is not a string or array | ${rolePermission}`);
+            throw new TypeError(`${commands[0]}'s rolePermission value is not a string or array | ${rolePermission}`);
         }
     }
 
@@ -110,25 +109,25 @@ module.exports = (client, commandOptions) => {
     // minArgs's default is 0, so if you didn't do anything,
     // this shouldn't be a problem
     if (typeof minArgs != "number") {
-        throw new Error(`ERROR: ${commands[0]}'s minArgs value is not a number. | ${minArgs}`);
+        throw new TypeError(`${commands[0]}'s minArgs value is not a number. | ${minArgs}`);
     }
 
     // if maxArgs isn't a number or null ("undefined")
     if (typeof maxArgs != "number" && maxArgs != null) {
-        throw new Error(`ERROR: ${commands[0]}'s maxArgs value is not null or a number. | ${maxArgs}`);
+        throw new TypeError(`${commands[0]}'s maxArgs value is not null or a number. | ${maxArgs}`);
     }
 
     // callback check
     if (typeof callback != "function") {
-        throw new Error(`ERROR: ${commands[0]}'s callback is invalid.`);
+        throw new TypeError(`${commands[0]}'s callback is invalid.`);
     }
 
     if (typeof allRoles != "boolean") {
-        throw new Error(`ERROR: ${commands[0]}'s allRoles value is not a boolean | ${allRoles}`);
+        throw new TypeError(`${commands[0]}'s allRoles value is not a boolean | ${allRoles}`);
     }
 
     if (typeof allPermissions != "boolean") {
-        throw new Error(`ERROR: ${commands[0]}'s allPermissions value is not a boolean | ${allPermissions}`);
+        throw new TypeError(`${commands[0]}'s allPermissions value is not a boolean | ${allPermissions}`);
     }
 
     // Everything seems to be in order
