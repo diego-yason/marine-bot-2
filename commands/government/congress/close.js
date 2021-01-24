@@ -4,10 +4,10 @@ const mongo = rfr("mongo.js");
 
 module.exports = {
     commands: ["close"],
-    callback: async (message, arguments, text) => {
+    callback: async (message, args, text) => {
         await mongo().then(async mongo => {
             
-        })
+        });
     },
     expectedArgs: "<number> <result `(p)assed | (f)ailed | (t)abled`> <additional details (optional)>",
     permissionError: "Only the Speaker and their deputies may declare legislation closed.",

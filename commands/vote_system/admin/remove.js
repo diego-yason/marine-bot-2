@@ -1,14 +1,8 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 // Remove a candidate from the election
 
 module.exports = {
     commands: ["vote_remove"],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         // put your code here
     },
     expectedArgs: "",

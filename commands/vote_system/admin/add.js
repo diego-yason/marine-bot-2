@@ -1,14 +1,8 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 // Add a candidate
 
 module.exports = {
     commands: ["vote_add", "vote_candidate"],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         // put your code here
     },
     expectedArgs: "",

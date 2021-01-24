@@ -1,14 +1,8 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 // Count the ballots (oh no)
 
 module.exports = {
     commands: ["vote_count"],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         // put your code here
     },
     expectedArgs: "",

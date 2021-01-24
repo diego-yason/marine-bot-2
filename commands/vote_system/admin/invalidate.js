@@ -1,15 +1,9 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 // Invalidate a vote for any reason
 // TODO: Notify voter if this happens
 
 module.exports = {
     commands: ["vote_invalidate"],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         // put your code here
     },
     expectedArgs: "",

@@ -1,14 +1,8 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 // Start a new election
 
 module.exports = {
     commands: ["vote_start"],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         // put your code here
     },
     expectedArgs: "",

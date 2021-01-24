@@ -1,14 +1,8 @@
-/*
-Required parameters:
-commands
-callback
-*/
-
 // Remove everything from the election
 
 module.exports = {
     commands: ["vote_finish"],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         // put your code here
     },
     expectedArgs: "",

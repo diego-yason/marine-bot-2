@@ -2,7 +2,7 @@
 
 module.exports = {
     commands: ["reopen"],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         
     },
     expectedArgs: "<legislation number>",
