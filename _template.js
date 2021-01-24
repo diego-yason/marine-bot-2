@@ -1,6 +1,6 @@
 module.exports = {
     commands: [],
-    callback: (message, arguments, text) => {
+    callback: (message, args, text) => {
         // put your code here
     },
 };
