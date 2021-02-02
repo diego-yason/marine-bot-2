@@ -141,17 +141,35 @@ module.exports = (client, commandOptions) => {
         const { member, content, guild, channel } = message;
         let permitted = false;
 
-        // command was used inside my test server or federalist republic
-        if (guild.id == "782095024959520768" || guild.id == "483773771329830924") {
-            // it might be a dm command, check first
-            if (dmOnly == false) {
-                permitted = true;
-            }
-        }
-
-        // was sent in dm, is it allowed in dm?
-        if (isDmAllowed && channel.type == "dm" && serverOnly == false) {
-            permitted = true;
+        switch (channel) {
+            case "NewsChannel":
+                message.reply("You do know that you're in a news channel?");
+                // falls through
+            case "TextChannel":
+                if (guild.id == "782095024959520768" || guild.id == "483773771329830924") {
+                    // it might be a dm command, check first
+                    if (dmOnly == false) {
+                        permitted = true;
+                    }
+                } else {
+                    message.reply("How did you even get me in this server? I only work in approved servers.");
+                }
+                break;
+            case "DMChannel":
+                // was sent in dm, is it allowed in dm?
+                if (dmOnly == true) {
+                    permitted = true;
+                }
+                if (isDmAllowed == true) {
+                    permitted = true;
+                }
+                if (serverOnly == true) {
+                    permitted = false;
+                }
+                break;
+            default:
+                message.reply("What kind of channel are you in? :thinking:");
+                break;
         }
 
         // it didn't pass the ifs from above, doesn't continue
