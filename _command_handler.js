@@ -155,8 +155,6 @@ module.exports = (client, commandOptions) => {
                     if (dmOnly == false) {
                         permitted = true;
                     }
-                } else {
-                    message.reply("How did you even get me in this server? I only work in approved servers.");
                 }
                 break;
             case "DMChannel":
@@ -175,7 +173,6 @@ module.exports = (client, commandOptions) => {
 
         // it didn't pass the ifs from above, doesn't continue
         if (permitted == false) {
-            message.reply("The command isn't allowed to be used in this setting.");
             return;
         }
 
