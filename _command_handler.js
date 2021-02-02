@@ -143,7 +143,6 @@ module.exports = (client, commandOptions) => {
 
         switch (channel) {
             case "NewsChannel":
-                message.reply("You do know that you're in a news channel?");
                 // falls through
             case "TextChannel":
                 if (guild.id == "782095024959520768" || guild.id == "483773771329830924") {
@@ -166,9 +165,6 @@ module.exports = (client, commandOptions) => {
                 if (serverOnly == true) {
                     permitted = false;
                 }
-                break;
-            default:
-                message.reply("What kind of channel are you in? :thinking:");
                 break;
         }
 
