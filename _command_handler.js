@@ -1,4 +1,5 @@
 /* eslint-disable prefer-const */
+const { GuildChannel, DMChannel } = require("discord.js");
 const { PREFIX } = require("./publicConfig.json");
 
 const validatePermissions = (permissions) => {
@@ -139,48 +140,6 @@ module.exports = (client, commandOptions) => {
         // makes my life WAYYYY easier
         const { member, content, guild, channel, author } = message;
 
-        // if bot, ignore
-        if (author.bot == true) {
-            return;
-        }
-
-        let permitted = false;
-
-        switch (channel) {
-            case "NewsChannel":
-                // falls through
-            case "TextChannel":
-                if (guild.id == "782095024959520768" || guild.id == "483773771329830924") {
-                    // it might be a dm command, check first
-                    if (dmOnly == false) {
-                        permitted = true;
-                    }
-                }
-                break;
-            case "DMChannel":
-                // was sent in dm, is it allowed in dm?
-                if (dmOnly == true) {
-                    permitted = true;
-                }
-                if (isDmAllowed == true) {
-                    permitted = true;
-                }
-                if (serverOnly == true) {
-                    permitted = false;
-                }
-                break;
-        }
-
-        // it didn't pass the ifs from above, doesn't continue
-        if (permitted == false) {
-            return;
-        }
-
-        // check the command name and alias
-        for (const alias of commands) {
-            if (content.toLowerCase().startsWith(`${PREFIX}${alias.toLowerCase()}`)) {
-                // How nice, they actually ran a command
-
                 // check if the member has the correct permissions
                 // it gets skipped if its an empty array
                 // TODO: Add support for allPermissions
@@ -191,35 +150,83 @@ module.exports = (client, commandOptions) => {
                     }
                 }
 
+                // check the command name and alias
+                for (const alias of commands) {
+                    if (content.toLowerCase().startsWith(`${PREFIX}${alias.toLowerCase()}`)) {
+                        // How nice, they actually ran a command
+
+                        console.log("Starting tests");
+                // if bot, ignore
+                if (author.bot == true) {
+                    return;
+                }
+
+                console.log("Passed bot test");
+
+                let permitted = false;
+
+                if (channel instanceof GuildChannel) {
+                    if (guild.id == "782095024959520768" || guild.id == "483773771329830924") {
+                        // it might be a dm command, check first
+                        if (dmOnly == false) {
+                            permitted = true;
+                        }
+                    }
+                    console.log("guild server");
+                }
+                if (channel instanceof DMChannel) {
+                    // was sent in dm, is it allowed in dm?
+                    if (dmOnly == true) {
+                        permitted = true;
+                    }
+                    if (isDmAllowed == true) {
+                        permitted = true;
+                    }
+                    if (serverOnly == true) {
+                        permitted = false;
+                    }
+                    console.log("dm server");
+                }
+
+                console.log("Done check");
+
+                // it didn't pass the ifs from above, doesn't continue
+                if (permitted == false) {
+                    return;
+                }
+
+                console.log("permitted");
+
                 // check if the member has the role/s needed
                 // hasRole so member only needs one of the roles
                 // If you want to require all roles, this section
                 // has to be updated to accept an option
                 // TODO: Add support for allRoles
-                let hasRole = false;
+                if (rolePermission.length > 0) {
+                    let hasRole = false;
 
-                for (const roleRequired of rolePermission) {
-                    const role = guild.roles.cache.find(guildRole => guildRole.name === roleRequired);
+                    for (const roleRequired of rolePermission) {
+                        const role = guild.roles.cache.find(guildRole => guildRole.name === roleRequired);
 
-                    // if the role doesn't exist
-                    if (!role && hasRole == false) {
-                        message.reply("Error 1: Role does not exist, ask your admin to create the role required.");
+                        // if the role doesn't exist
+                        if (!role && hasRole == false) {
+                            message.reply("Error 1: Role does not exist, ask your admin to create the role required.");
+                            return;
+                        }
+
+                        // the role exists and the member has it
+                        if (member.roles.cache.has(role.id)) {
+                            hasRole = true;
+                            console.log("yeah the dude got a role");
+                        }
+                    }
+
+                    // Member has none of the roles, command not granted
+                    if (hasRole == false && rolePermission.length > 0) {
+                        message.reply("Error 2: You do not have the required role.");
                         return;
                     }
-
-                    // the role exists and the member has it
-                    if (member.roles.cache.has(role.id)) {
-                        hasRole = true;
-                        console.log("yeah the dude got a role");
-                    }
                 }
-
-                // Member has none of the roles, command not granted
-                if (hasRole == false && rolePermission.length > 0) {
-                    message.reply("Error 2: You do not have the required role.");
-                    return;
-                }
-
                 console.log("command is authorized for processing");
 
                 // END OF CHECKER, ACTUAL CODE RUNS BELOW
