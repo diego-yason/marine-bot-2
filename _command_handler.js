@@ -135,10 +135,15 @@ module.exports = (client, commandOptions) => {
     console.log(`Registering command: ${commands[0]}`);
 
     client.on("message", message => {
-
         // I was today years old (December 27, 2020) that you can do this
         // makes my life WAYYYY easier
-        const { member, content, guild, channel } = message;
+        const { member, content, guild, channel, author } = message;
+
+        // if bot, ignore
+        if (author.bot == true) {
+            return;
+        }
+
         let permitted = false;
 
         switch (channel) {
