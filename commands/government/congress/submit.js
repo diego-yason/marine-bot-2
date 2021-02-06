@@ -39,7 +39,7 @@ module.exports = {
         await mongo().then(async mongoose => {
             // note: changed await mongo() from (await mongo())
             // just incase something happens
-            const model = await mongo().model("legislation", localSchema);
+            const model = (await mongo()).model("legislation", localSchema);
             const count = await model.countDocuments({ type: args[0] }) + 1;
 
             // this is required because of i use slice and
