@@ -44,6 +44,7 @@ client.once("ready", async () => {
 
     // Connect the bot to the MongoDB local server
     // Should I move to a cloud server :thinking:
+    /*
     await mongo().then(mongoose => {
         try {
             console.log("Connection to MongoDB Established.");
@@ -53,7 +54,7 @@ client.once("ready", async () => {
             mongoose.connection.close();
         }
     });
-
+    */
     readCommands("commands");
 });
 
