@@ -8,6 +8,8 @@ const { CONGRESS_NUMBER } = rfr("publicConfig.json");
 
 const localSchema = new Schema({ type: String });
 
+// TODO: [MAJOR] Rewrite entire command with the new legislation class
+
 module.exports = {
     commands: ["submit"],
     callback: async (message, args, text) => {
