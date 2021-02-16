@@ -1,3 +1,17 @@
+const fs = require("fs");
+const path = require("path");
+
+function lookup(groupName, idNumber) {
+    const data = JSON.parse(fs.readFileSync(path.join(__dirname, "lookup_json", `${groupName}.json`)));
+
+    if (data[idNumber]) {
+        return data[idNumber].Name;
+    } else {
+        // TODO: Make sure code using the function can handle null
+        return null;
+    }
+}
+
 class coreId {
     constructor(name, tag, id) {
         this.name = name;
@@ -58,6 +72,7 @@ module.exports = {
             super(name, tag, id);
         }
     },
+    // TODO: Ask Fed if I should consider everyone as a Federalist
     OutsiderId: class OutsiderId extends coreId {
         constructor(name, tag, id) {
             super(name, tag, id);
@@ -67,10 +82,11 @@ module.exports = {
 
     },
     award: class Award {
-        constructor(name, award) {
-            this.name = name;
+        constructor(issuer, awardIdNumber, award) {
+            this.name = lookup("award", awardIdNumber);
             this.issued = Date.now();
             this.award = award;
+            this.issuer = issuer;
             // TODO: accept image links for visual of medal or whatever
         }
 
@@ -78,6 +94,7 @@ module.exports = {
             this.issued = newDate; // overwrite issue should be in unix
         }
     },
+    GovDocument: ,
     bill: class Bill extends governmentDocument {
         constructor(department, name, index, link) {
             super(department, name, index, link);
@@ -87,5 +104,5 @@ module.exports = {
         constructor(department, name, index, link) {
             super(department, name, index, link);
         }
-    }
+    },
 };
