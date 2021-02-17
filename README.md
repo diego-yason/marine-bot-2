@@ -1,6 +1,6 @@
 ### Making your own command
 ---
-Duplicate the _template.js file. All fields there are required.
+Duplicate the `_template.js` file. All fields there are required.
 
 | Parameter | Type | Default | Description |
 | ----------- | ----------- | ----------- | ----------- |
@@ -10,12 +10,12 @@ Duplicate the _template.js file. All fields there are required.
 | permissionError | String | "No permission. Command file doesn't give any error messages, this is just default." | Optional. Error message given if user doesn't have the required roles, Discord permissions, or specific UserID. |
 | minArgs | Number | 0 | Optional. Minimum arguments needed to run a command |
 | maxArgs | Number | null | Optional. Maximum arguments needed to run a command. |
-| permissions | Array | *none* | Optional. Check discordpermissions.txt for the list of permissions recognized by the bot (anything else will throw a TypeError). If a new Discord permission is added but is not in discordpermissions.txt, contact KingMarine#5676 to add in the new permission. |
-| allPermissions | Boolean | false | Optional. User must have all the commands listed in *permissions*. |
+| permissions | Array | *none* | Optional. Check `discordpermissions.txt` for the list of permissions recognized by the bot (anything else will throw a TypeError). If a new Discord permission is added but is not in `discordpermissions.txt`, contact KingMarine#5676 to add in the new permission. |
+| allPermissions | Boolean | false | Optional. User must have all the commands listed in `permissions`. |
 | rolePermission | Array | *none* | Optional. Server roles required to run a command. Use exact name of role. |
-| allRoles | Boolean | false | Optional. User must have all roles listed in rolePermission. |
+| allRoles | Boolean | false | Optional. User must have all roles listed in `rolePermission`. |
 | dmOnly | Boolean | false | Optional. Comamnd only works in DM. |
-| isDmAllowed | Boolean | false | MUST SET TO TRUE IF dmOnly IS *true*. Optional. Command *can* work in DM. |
+| isDmAllowed | Boolean | false | MUST SET TO TRUE IF `dmOnly` IS `true`. Optional. Command *can* work in DM. |
 | serverOnly | Boolean | false | Command only works in servers. |
 
 ### Copyright
