@@ -69,7 +69,12 @@ module.exports = (client, commandOptions) => {
         isDmAllowed = false,
         dmOnly = false,
         serverOnly = false,
+        active = true,
     } = commandOptions;
+
+    if (active == false) {
+        throw new InternalError(`${commands[0]} is disabled. Change "active" option to true to enable.`)
+    }
 
     // make stuff into an array
     // commands
