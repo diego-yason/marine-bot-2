@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { URL } = require("url");
 
 function lookup(groupName, idNumber) {
     const data = JSON.parse(fs.readFileSync(path.join(__dirname, "lookup_json", `${groupName}.json`)));
@@ -78,10 +79,10 @@ module.exports = {
             super(name, tag, id);
         }
     },
-    arrest: class ArrestInfo {
+    Arrest: class ArrestInfo {
 
     },
-    award: class Award {
+    Award: class Award {
         constructor(issuer, awardIdNumber, award) {
             this.name = lookup("award", awardIdNumber);
             this.issued = Date.now();
@@ -94,15 +95,44 @@ module.exports = {
             this.issued = newDate; // overwrite issue should be in unix
         }
     },
-    GovDocument: ,
-    bill: class Bill extends governmentDocument {
-        constructor(department, name, index, link) {
-            super(department, name, index, link);
+    GovDocument: class GovDocument extends governmentDocument {
+
+    },
+    Bill: class Bill extends governmentDocument {
+        constructor(name, index, link) {
+            super("Congress", name, index, link);
         }
     },
-    amendment: class Amendment extends governmentDocument {
-        constructor(department, name, index, link) {
-            super(department, name, index, link);
+    Amendment: class Amendment extends governmentDocument {
+        constructor(name, index, link) {
+            super("Congress", name, index, link);
+        }
+    },
+    Law: class Law {
+        /**
+         * Insert a new law to the Federalist Record
+         * @param {String} name Name of the Law
+         * @param {URL} link URL of the Law
+         * @param {Bill} BillObject
+         * @param {Date} enacted Optional. Date enacted. Date autofills to current date if empty.
+         * @param {String} status Optional. If law is In Effect, Repealed, or Declared Unconstitutional or whatever. Status autofills to "Enacted" if empty.
+         * // TODO: Consider crossing Law with Bill in the add command
+         */
+        constructor(name, link, enacted = Date.now(), BillObject, status = "In Effect") {
+            this.name = name;
+            this.link = link;
+            this.enacted = enacted;
+            this.sponsors = BillObject.sponsors;
+            this.billnumber = BillObject.index;
+            this.status = status;
+        }
+
+        /**
+         * Change status of the law
+         * @param {String} newstatus
+         */
+        changeStatus(newstatus) {
+            this.stauts = newstatus;
         }
     },
 };
