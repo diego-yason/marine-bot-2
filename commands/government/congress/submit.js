@@ -9,7 +9,7 @@ const { CONGRESS_NUMBER } = rfr("publicConfig.json");
 const localSchema = new Schema({ type: String });
 
 // TODO: [MAJOR] Rewrite entire command with the new legislation class
-
+// REVIEW all Mongo/Mongoose related code here (its really confusing now)
 module.exports = {
     commands: ["submit"],
     callback: async (message, args, text) => {

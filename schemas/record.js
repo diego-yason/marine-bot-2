@@ -19,4 +19,5 @@ const recordSchema = mongoose.Schema({
     },
 });
 
+// CONSIDER: moving this to the main command file
 module.exports = mongoose.model("documents", recordSchema);

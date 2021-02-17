@@ -7,7 +7,6 @@ module.exports = {
         const { author } = message;
 
         if (author.id === "197305044834451456" || author.id === "771478710678716476") {
-            // FIXME TypeError happens when ``` gets replaced
             try {
                 eval(text.replace("```", " ").replace("```", " "));
             } catch (error) {
