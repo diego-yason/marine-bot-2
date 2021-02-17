@@ -3,6 +3,7 @@
 Duplicate the _template.js file. All fields there are required.
 
 | Parameter | Type | Default | Description |
+| ----------- | ----------- | ----------- | ----------- |
 | commands | Array | *none* | Required. Name of the command. Index 0 should be the actual name of the command while the rest are aliases. |
 | callback | Function | *none* | Required. This is what the bot will process when the command is called. (Assuming the person passed all checks.) |
 | expectedArgs | String | "Expected Args not given in command file." | Optional. Error message given if incorrect too many/too little args were given. (You can typecheck your args in the callback, be sure to either use return instead of new Error) |
