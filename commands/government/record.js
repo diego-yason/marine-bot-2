@@ -2,7 +2,6 @@ const rfr = require("rfr");
 
 const mongo = rfr("mongo.js");
 
-
 const MarineClass = require("@kingmarine/marine-package");
 
 module.exports = {
