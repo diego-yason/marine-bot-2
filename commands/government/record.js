@@ -2,8 +2,8 @@ const rfr = require("rfr");
 
 const mongo = rfr("mongo.js");
 
-// REMINDME to switch require to rfr again
-const MarineClass = require("../../constructors");
+
+const MarineClass = require("@kingmarine/marine-package");
 
 module.exports = {
     commands: ["record"],
