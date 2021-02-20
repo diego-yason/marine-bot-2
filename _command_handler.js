@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 const { GuildChannel, DMChannel } = require("discord.js");
-const { PREFIX } = require("./publicConfig.json");
+const PREFIX = "k!";
 
 const validatePermissions = (permissions) => {
     // This is a list of all discord-level
