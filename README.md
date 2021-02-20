@@ -17,6 +17,7 @@ Duplicate the `_template.js` file. All fields there are required.
 | dmOnly | Boolean | false | Optional. Comamnd only works in DM. |
 | isDmAllowed | Boolean | false | MUST SET TO TRUE IF `dmOnly` IS `true`. Optional. Command *can* work in DM. |
 | serverOnly | Boolean | false | Command only works in servers. |
+| active | Boolean | true | If false, the bot will not process this command. Use cases are rare but it's good to have options. |
 
 ### Copyright
 ---

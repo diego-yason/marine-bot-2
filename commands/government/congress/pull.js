@@ -1,6 +1,6 @@
 const rfr = require("rfr");
 
-const { CONGRES_NUMBER } = rfr("publicConfig.json");
+const CONGRES_NUMBER = rfr("privateConfig.json"); // CONSIDER: Putting congress number in mongo
 
 module.exports = {
     commands: ["pull"],

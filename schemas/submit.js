@@ -21,5 +21,6 @@ const submitSchema = mongoose.Schema({
     },
 });
 
+// CONSIDER: Putting this schema directly into the submit.js command file
 // TODO: Add options for flexibility
 module.exports = mongoose.model("legislations", submitSchema);

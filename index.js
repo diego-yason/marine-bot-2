@@ -4,13 +4,13 @@ const fs = require("fs");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
-const { DISCORD_KEY } = require("./privateConfig.json");
-
-const mongo = require("./mongo");
-
 // set the root to the project folder using rfr
 const rfr = require("rfr");
 rfr.setRoot(__dirname);
+
+const { DISCORD_KEY } = rfr("privateConfig.json");
+
+const mongo = rfr("mongo");
 
 client.once("ready", async () => {
     console.log("Ready!");
@@ -44,7 +44,7 @@ client.once("ready", async () => {
 
     // Connect the bot to the MongoDB local server
     // Should I move to a cloud server :thinking:
-    /*
+
     await mongo().then(mongoose => {
         try {
             console.log("Connection to MongoDB Established.");
@@ -54,7 +54,7 @@ client.once("ready", async () => {
             mongoose.connection.close();
         }
     });
-    */
+
     readCommands("commands");
 });
 

@@ -4,12 +4,12 @@ const { Schema } = require("mongoose");
 const mongo = rfr("mongo.js");
 const schema = rfr("schemas/submit.js");
 
-const { CONGRESS_NUMBER } = rfr("publicConfig.json");
+const { CONGRESS_NUMBER } = rfr("privateConfig.json");
 
 const localSchema = new Schema({ type: String });
 
 // TODO: [MAJOR] Rewrite entire command with the new legislation class
-
+// REVIEW all Mongo/Mongoose related code here (its really confusing now)
 module.exports = {
     commands: ["submit"],
     callback: async (message, args, text) => {

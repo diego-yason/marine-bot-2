@@ -1,5 +1,7 @@
+const rfr = require("rfr");
+
 const mongoose = require("mongoose");
-const { mongoPath } = require("./privateConfig.json");
+const { mongoPath } = rfr("privateConfig.json");
 
 module.exports = async () => {
     await mongoose.connect(mongoPath, {
