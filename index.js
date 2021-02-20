@@ -4,13 +4,13 @@ const fs = require("fs");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
-const { DISCORD_KEY } = require("./privateConfig.json");
-
-const mongo = require("./mongo");
-
 // set the root to the project folder using rfr
 const rfr = require("rfr");
 rfr.setRoot(__dirname);
+
+const { DISCORD_KEY } = rfr("privateConfig.json");
+
+const mongo = rfr("mongo");
 
 client.once("ready", async () => {
     console.log("Ready!");
