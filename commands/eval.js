@@ -4,13 +4,16 @@
 module.exports = {
     commands: ["eval"],
     callback: (message, args, text) => {
-        const { author } = message;
+        const { author, content } = message;
 
         if (author.id === "197305044834451456" || author.id === "771478710678716476") {
             try {
-                eval(text.replace("```", " ").replace("```", " "));
+                eval(text.replace("```", " ").replace("js", " ").replace("```", " "));
             } catch (error) {
                 console.log("eval error: " + error);
+            } finally {
+                console.log(content);
+                message.delete();
             }
         }
     },
