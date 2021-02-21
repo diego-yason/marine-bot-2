@@ -170,6 +170,9 @@ module.exports = (client, commandOptions) => {
 
                 let permitted = false;
 
+                // Channel Check
+                // CONSIDER changing how the bot checks to not have the weird onlyDm and whatever in the readme docs
+
                 if (channel instanceof GuildChannel) {
                     if (guild.id == "782095024959520768" || guild.id == "483773771329830924") {
                         // it might be a dm command, check first
