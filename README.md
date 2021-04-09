@@ -2,12 +2,10 @@
 
 ## Making your own slash command
 
----
 To be completed
 
 ## Copyright
 
----
 MarineBot, a Discord bot for the Federalist Republic Discord server.
 Copyright (C) 2020-2021  KingMarine#5676
 
