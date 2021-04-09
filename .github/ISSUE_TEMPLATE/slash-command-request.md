@@ -1,7 +1,7 @@
 ---
 name: Slash Command Request
 about: Request for a Slash Command
-title: "[COMMAND SUGGESTION] "
+title: "[COMMAND SUGGESTION] Add /command-name"
 labels: new command
 assignees: KingMarine-GH
 
