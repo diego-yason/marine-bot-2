@@ -1,8 +1,0 @@
-Just because why not?
-
-Error 0: Discord permission doesn't exist
-Error 1: Role required doesn't exist in server
-Error 2: Member doesn't have the required role
-Error 3: Not enough arguments required
-Error 4: Too many arguments
-Error 5: Incorrect arguments
