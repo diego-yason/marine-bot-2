@@ -144,3 +144,5 @@ Temporary Items
 
 # ESlint
 .eslintrc.json
+
+secrets.json
