@@ -2,7 +2,7 @@
 name: New Command Group Request
 about: Request for a group of commands
 title: "[GROUP COMMAND SUGGESTION] Add /base-command-name"
-labels: new command
+labels: group command
 assignees: KingMarine-GH
 
 ---
