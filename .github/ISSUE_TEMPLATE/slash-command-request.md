@@ -11,8 +11,7 @@ assignees: KingMarine-GH
 
 ## What is the actual slash command?
 
-Comply with Discord's limits. <https://discord.com/developers/docs/interactions/slash-commands#a-quick-note-on-limits>
-You usually won't hit any limits though
+Comply with Discord's limits. <https://discord.com/developers/docs/interactions/slash-commands#a-quick-note-on-limits> You usually won't hit any limits though. Include parameters also with {param-name}. Specify type of parameter in Additional Notes.
 
 ## Describe the function of the slash command
 
@@ -24,4 +23,4 @@ Should the command only be allowed to be called by people with a certain role or
 
 ## Additional Notes
 
-Put any additional comments here if you have any
+Put any additional comments here if you have any. Specify if this command is part of a command group also.
