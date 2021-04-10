@@ -7,23 +7,21 @@ assignees: KingMarine-GH
 
 ---
 
-**What is the actual slash command?**
-Comply with Discord's limits. https://discord.com/developers/docs/interactions/slash-commands#a-quick-note-on-limits
+# New Command Suggestion
+
+## What is the actual slash command?
+
+Comply with Discord's limits. <https://discord.com/developers/docs/interactions/slash-commands#a-quick-note-on-limits>
 You usually won't hit any limits though
 
-*text here*
+## Describe the function of the slash command
 
-**Describe the function of the slash command**
 Just give a short explanation of what the result of the command will be. Ex: `/ban` will ban a user
 
-*text here*
+## Any restriction of use?
 
-**Any restriction of use?**
 Should the command only be allowed to be called by people with a certain role or even specific people?
 
-*text here*
+## Additional Notes
 
-**Additional Notes**
 Put any additional comments here if you have any
-
-*text here*
