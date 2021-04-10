@@ -1,0 +1,24 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Auto Assign to Slash Command project
+
+# Controls when the action will run. 
+on:
+  issues:
+    types: [opened, labeled]
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign to One Project
+    steps:
+    - name: Assign issues and pull requests with `new command` label to project 1
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: |
+        contains(github.event.issue.labels.*.name, 'new command')
+      with:
+        project: 'https://github.com/KingMarine-GH/marine-bot-2/projects/1'
+        column_name: 'Pending Commands'
