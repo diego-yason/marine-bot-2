@@ -1,3 +1,3 @@
-module.exports = (axios, options, data) => {
+module.exports = (axios, data, res) => {
     console.log("Test!");
 };
