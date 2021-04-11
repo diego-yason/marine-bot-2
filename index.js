@@ -1,9 +1,8 @@
-const { isArray } = require("util");
-
 const Discord = require("discord.js"),
       client = new Discord.Client(),
       { TOKEN } = require("./secrets.json"),
       fs = require("fs"),
+      path = require("path"),
       axios = require("axios").default.create({
           baseURL: "https://discord.com/api/v8",
           headers: {
@@ -21,7 +20,26 @@ const slash = {};
  * @type {object} Array of all command callbacks found in the "commands" folder
  */
 
+function readDir(folderName = "commands", lastPath = ".") {
+    const dirPath = `${lastPath}/${folderName}`;
+    const items = fs.readdirSync(dirPath);
+    for (const item of items) {
+        const lstat = fs.lstatSync(`${dirPath}/${item}`);
+        if (lstat.isDirectory()) {
+            readDir(item, dirPath);
+        } else if (lstat.isFile()) {
+            registerCommand(`${dirPath}/${item}`);
+        }
+    }
+}
 
+function registerCommand(filePath) {
+    const name = filePath.slice(11, -3);
+
+    slash[name] = require(filePath);
+}
+
+readDir();
 
 client.on("raw", ({ t: EVENT_NAME, d: data, s: seq, op }) => {
     const { options, name } = data.data;
