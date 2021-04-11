@@ -90,4 +90,8 @@ client.on("raw", ({ t: EVENT_NAME, d: data, s: seq, op }) => {
     }
 });
 
+client.once("ready", () => {
+    console.log("Ready");
+});
+
 client.login(TOKEN);
