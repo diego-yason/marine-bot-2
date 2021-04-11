@@ -2,16 +2,21 @@ const Discord = require("discord.js"),
       client = new Discord.Client(),
       { TOKEN } = require("./secrets.json"),
       fs = require("fs"),
-      slash = {},
       axios = require("axios").default.create({
           baseURL: "https://discord.com/api/v8",
           headers: {
-              authorization: "Bot " + TOKEN
-          }
+              authorization: "Bot " + TOKEN,
+          },
       });
 
-// just spitballing ideas right now, its 3:39am
+/**
+ * @type {object} Directory for all command callbacks
+ */
+const slash = {};
 
+/**
+ * @type {object} Array of all command callbacks found in the "commands" folder
+ */
 const commands = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 
 for (const command of commands) {
