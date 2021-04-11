@@ -13,7 +13,7 @@ In the `commands` folder, if you are making a **base** command (or are not addin
 When your command is called, the bot will call your functions with the following parameters:
 
 | parameter  | type           | description                                                                      |
-|:----------:|:--------------:|:--------------------------------------------------------------------------------:|
+|:----------:|:--------------:|:---------------------------------------------------------------------------------|
 | axios      | axios instance | For REST API interactions. Already configured to be authorized with Discord API. |
 | data       | JSON object    | Data received from Discord.                                                      |
 | res        | JSON object    | Methods to reply to the command. Check the *res* section.                        |
@@ -34,13 +34,13 @@ The res object has the following functions:
 #### reply
 
 | parameter | type   | required | description              |
-|:---------:|:------:|:--------:|:------------------------:|
+|:---------:|:------:|:--------:|:-------------------------|
 | message   | string | *true*   | Sends a regular message. |
 
 #### embed
 
 | parameter | type   | required | description                                                                       |
-|:---------:|:------:|:--------:|:---------------------------------------------------------------------------------:|
+|:---------:|:------:|:--------:|:----------------------------------------------------------------------------------|
 | embed     | object | *true*   | Sends an embed message. Follow Discord's embed structure. See reference for link. |
 | message   | string | *false*  | Sends a regular message along with the embed.                                     |
 
