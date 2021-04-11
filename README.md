@@ -52,7 +52,6 @@ For `data` and `res`, see [Discord API docs](https://discord.com/developers/docs
 
 For `res`, see [the `res` docs here](###-res-object)
 
-
 For `embeds`, see [Discord's embed structure](https://discord.com/developers/docs/resources/channel#embed-object)
 
 ## Copyright
