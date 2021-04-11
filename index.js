@@ -24,11 +24,29 @@ for (const command of commands) {
     slash[command] = cmd;
 }
 
-client.on("raw", (e) => {
-    if (e.d === "INTERACTION_CREATE") {
+client.on("raw", ({ t: EVENT_NAME, d: data, s: seq, op }) => {
+    const { options, name } = data.data;
+    if (EVENT_NAME === "INTERACTION_CREATE") {
+        const res = {
+            /**
+             * This will send a plain text reply to Discord. Markdown is supported.
+             * @param {string} message
+             */
+            reply: (message) => {
+                axios.post();
+            },
+            /**
+             * This sends an embed to Discord. Follow the structure from Discord. https://discord.com/developers/docs/resources/channel#embed-object
+             * @param {object} embedData JSON Embed Data
+             */
+            embed: (embedData) => {
+                axios.post();
+            },
+        };
+
         try {
-            slash[e.d.name]; // TODO check Discord docs and see where to get the command called
-        } catch (e) {
+            slash[data](axios, data, res); // TODO check Discord docs and see where to get the command called
+        } catch (err) {
             // TODO make a reply saying the callback isn't available yet
         }
     }
