@@ -48,7 +48,7 @@ The res object has the following functions:
 
 For `axios`, see [axios docs](https://github.com/axios/axios#readme)
 
-For `data` and `res`, see [Discord API docs](https://discord.com/developers/docs/interactions/slash-commands#receiving-an-interaction)
+For `data` and `slash-data`, see [Discord API docs](https://discord.com/developers/docs/interactions/slash-commands#receiving-an-interaction)
 
 For `res`, see [the `res` docs here](###-res-object)
 
