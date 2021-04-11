@@ -20,12 +20,8 @@ const slash = {};
 /**
  * @type {object} Array of all command callbacks found in the "commands" folder
  */
-const commands = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 
-for (const command of commands) {
-    const cmd = require("./commands/" + command);
-    slash[command] = cmd;
-}
+
 
 client.on("raw", ({ t: EVENT_NAME, d: data, s: seq, op }) => {
     const { options, name } = data.data;
