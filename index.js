@@ -59,7 +59,7 @@ bot.on("message", (raw) => {
     switch (op) {
         case 0: {
             if (EVENT_NAME === "INTERACTION_CREATE") {
-                const intData = data.data 
+                const intData = data.data;
                 let command;
                 // REMINDME this only handles 1 nested subcommand, not a group
                 if (data.type === 2) {
