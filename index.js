@@ -1,7 +1,6 @@
 const WebSocket = require("ws"),
       { TOKEN } = require("./secrets.json"),
       fs = require("fs"),
-      path = require("path"),
       axios = require("axios").default.create({
           baseURL: "https://discord.com/api/v8",
           headers: {
