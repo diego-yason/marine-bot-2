@@ -9,6 +9,24 @@ const WebSocket = require("ws"),
       }),
       APP_ID = "782094351685124146";
 
+axios.interceptors.response.use(async (response) => {
+    if (response.status === 429) {
+
+        const rateLimit = () => {
+            return new Promise((res) => {
+            setTimeout((req) => {
+                axios[req.method](req.data).then((value) => {
+                    res(value);
+                });
+                }, response.data.retry_after * 1000, response.request);
+            });
+        };
+
+        // rate limit
+        return Promise.resolve(await rateLimit());
+    }
+});
+
 /**
  * @type {object} Directory for all command callbacks
  */
