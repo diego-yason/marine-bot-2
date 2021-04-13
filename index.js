@@ -1,4 +1,9 @@
+<<<<<<< HEAD:src/index.js
 const WebSocket = require("ws"),
+=======
+const Discord = require("discord.js"),
+      client = new Discord.Client(),
+>>>>>>> parent of 20ebe05 (housekeeping):index.js
       { TOKEN } = require("./secrets.json"),
       fs = require("fs"),
       axios = require("axios").default.create({
