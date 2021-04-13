@@ -130,11 +130,12 @@ bot.on("message", (raw) => {
         }
         case 7: {
             // reconnect request
-            break;
+            console.log("Got a reconnect request, closing bot because I can't handle it");
+            throw new Error("Reconnect request received");
         }
         case 9: {
             // invalid session
-            break;
+            throw new Error("Session was invalid");
         }
         case 10: {
             // Hello!
