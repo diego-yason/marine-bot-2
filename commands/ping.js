@@ -1,3 +1,3 @@
 module.exports = (axios, data, res) => {
-    console.log("Test!");
+    res.reply("po||n||g?!");
 };
