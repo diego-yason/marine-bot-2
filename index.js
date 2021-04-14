@@ -24,6 +24,8 @@ axios.interceptors.response.use(async (response) => {
 
         // rate limit
         return Promise.resolve(await rateLimit());
+    } else {
+        console.log(response.statusText);
     }
 });
 
@@ -80,9 +82,14 @@ bot.on("message", (raw) => {
                 let command;
                 // REMINDME this only handles 1 nested subcommand, not a group
                 // TODO allow this to go through multiple subcommands
-                if (data.type === 2) {
-                    // its a subcommand
-                    command = `${intData.name}/${intData.options[0].name}`;
+                try {
+                    if (intData.options[0] === 1) {
+                        // its a subcommand
+                        command = `${intData.name}/${intData.options[0].name}`;
+                    }
+                } catch (e) {
+                    // probably means that theres no subcommand
+                    command = intData.name;
                 }
 
                 axios.post(`/interactions/${data.id}/${data.token}/callback`, {
@@ -114,7 +121,7 @@ bot.on("message", (raw) => {
                             throw new TypeError("Too many embeds!");
                         }
 
-                        axios.post(`/webhooks/${APP_ID}/${data.token}/messages/@original`, {
+                        axios.patch(`/webhooks/${APP_ID}/${data.token}/messages/@original`, {
                             content: message,
                             embeds: embedData,
                         });
