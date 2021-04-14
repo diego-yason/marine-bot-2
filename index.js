@@ -79,6 +79,7 @@ bot.on("message", (raw) => {
                 const intData = data.data;
                 let command;
                 // REMINDME this only handles 1 nested subcommand, not a group
+                // TODO allow this to go through multiple subcommands
                 if (data.type === 2) {
                     // its a subcommand
                     command = `${intData.name}/${intData.options[0].name}`;
