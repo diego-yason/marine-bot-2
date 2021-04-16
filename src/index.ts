@@ -157,7 +157,7 @@ bot.on("message", (raw) => {
         }
         case 10: {
             // Hello!
-            heartbeat_interval = setInterval(function(sequence) {
+            heartbeat_interval = setInterval(function(sequence: number | undefined | null) {
                 if (!heartbeat_ack) {
                     bot.close(3000);
                     return;
@@ -167,7 +167,7 @@ bot.on("message", (raw) => {
 
                 bot.send(JSON.stringify({
                     op: 1,
-                    d: (typeof sequence === Number) ? sequence : null,
+                    d: (sequence) ? sequence : null,
                 }));
 
                 heartbeat_ack = false;
