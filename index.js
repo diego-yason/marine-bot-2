@@ -1,6 +1,10 @@
+// BUG *MAJOR* BOT WON'T LOGIN
+
+require("dotenv").config();
+
 const Discord = require("discord.js"),
       client = new Discord.Client(),
-      { TOKEN } = require("./secrets.json"),
+      TOKEN = process.env.TOKEN,
       fs = require("fs"),
       path = require("path"),
       axios = require("axios").default.create({
