@@ -145,6 +145,8 @@ Temporary Items
 # ESlint
 .eslintrc.json
 
-secrets.json
+# Using typescript now
+*.js
 
-src/*.js
+# All command files are spared for now
+!commands/*.js
