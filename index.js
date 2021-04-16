@@ -24,6 +24,12 @@ const slash = {};
  * @type {object} Array of all command callbacks found in the "commands" folder
  */
 
+// setting up monitor
+require("axios").default.post(process.env.MONITOR);
+const monitor = setInterval(() => {
+    require("axios").default.post(process.env.MONITOR);
+}, 300000);
+
 function readDir(folderName = "commands", lastPath = ".") {
     const dirPath = `${lastPath}/${folderName}`;
     const items = fs.readdirSync(dirPath);
