@@ -146,3 +146,5 @@ Temporary Items
 .eslintrc.json
 
 secrets.json
+
+src/*.js
