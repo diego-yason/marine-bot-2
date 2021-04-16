@@ -4,6 +4,7 @@ require("dotenv").config();
 import ws from "ws";
 import * as fs from "fs";
 import axios from "axios";
+import axiosRetry from "axios-retry";
 
 const TOKEN = process.env.TOKEN,
       // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -15,25 +16,7 @@ const TOKEN = process.env.TOKEN,
       }),
       APP_ID = "782094351685124146";
 
-discordAxios.interceptors.response.use(async (response) => {
-    if (response.status === 429) {
-
-        const rateLimit = () => {
-            return new Promise((res) => {
-            setTimeout((req) => {
-                discordAxios[req.method](req.data).then((value) => {
-                    res(value);
-                });
-                }, response.data.retry_after * 1000, response.request);
-            });
-        };
-
-        // rate limit
-        return Promise.resolve(await rateLimit());
-    } else {
-        console.log(response.statusText);
-    }
-});
+axiosRetry(discordAxios, { retries: 3 });
 
 const slash = {};
 
