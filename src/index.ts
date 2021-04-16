@@ -1,9 +1,13 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
 
+import ws from "ws";
+import * as fs from "fs";
+import axios from "axios";
+
 const TOKEN = process.env.TOKEN,
-      WebSocket = require("ws"),
-      fs = require("fs"),
-      axios = require("axios").default.create({
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      discordAxios = axios.create({
           baseURL: "https://discord.com/api/v8",
           headers: {
               authorization: "Bot " + TOKEN,
@@ -11,13 +15,13 @@ const TOKEN = process.env.TOKEN,
       }),
       APP_ID = "782094351685124146";
 
-axios.interceptors.response.use(async (response) => {
+discordAxios.interceptors.response.use(async (response) => {
     if (response.status === 429) {
 
         const rateLimit = () => {
             return new Promise((res) => {
             setTimeout((req) => {
-                axios[req.method](req.data).then((value) => {
+                discordAxios[req.method](req.data).then((value) => {
                     res(value);
                 });
                 }, response.data.retry_after * 1000, response.request);
@@ -31,9 +35,6 @@ axios.interceptors.response.use(async (response) => {
     }
 });
 
-/**
- * @type {object} Directory for all command callbacks
- */
 const slash = {};
 
 /**
@@ -41,9 +42,9 @@ const slash = {};
  */
 
 // setting up monitor
-require("axios").default.post(process.env.MONITOR);
+axios.post(process.env.MONITOR);
 const monitor = setInterval(() => {
-    require("axios").default.post(process.env.MONITOR);
+    axios.post(process.env.MONITOR);
 }, 300000);
 
 function readDir(folderName = "commands", lastPath = ".") {
@@ -68,7 +69,7 @@ function registerCommand(filePath) {
 readDir();
 
 // REMINDME this is not a good idea since we're not checking how many shards are available
-const bot = new WebSocket("wss://gateway.discord.gg?v=8");
+const bot = new ws("wss://gateway.discord.gg?v=8");
 
 let heartbeat_interval,
     lastSequence,
@@ -100,7 +101,7 @@ bot.on("message", (raw) => {
                     command = intData.name;
                 }
 
-                axios.post(`/interactions/${data.id}/${data.token}/callback`, {
+                discordAxios.post(`/interactions/${data.id}/${data.token}/callback`, {
                     type: 5,
                 });
 
@@ -110,7 +111,7 @@ bot.on("message", (raw) => {
                      * @param {string} message
                      */
                     reply: (message) => {
-                        axios.patch(`/webhooks/${APP_ID}/${data.token}/messages/@original`, {
+                        discordAxios.patch(`/webhooks/${APP_ID}/${data.token}/messages/@original`, {
                             content: message,
                         });
                     },
@@ -129,7 +130,7 @@ bot.on("message", (raw) => {
                             throw new TypeError("Too many embeds!");
                         }
 
-                        axios.patch(`/webhooks/${APP_ID}/${data.token}/messages/@original`, {
+                        discordAxios.patch(`/webhooks/${APP_ID}/${data.token}/messages/@original`, {
                             content: message,
                             embeds: embedData,
                         });
@@ -137,7 +138,7 @@ bot.on("message", (raw) => {
                 };
 
                 try {
-                    slash[command](axios, data, res);
+                    slash[command](discordAxios, data, res);
                 } catch (e) {
                     // i don't really care about this yet
                 }
