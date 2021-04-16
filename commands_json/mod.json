@@ -1,0 +1,44 @@
+{
+    "name": "mod",
+    "description": "Base command for all things moderation-related",
+    "options": [
+        {
+            "name": "kick",
+            "description": "Kick a person from the server. Requires Kick Members permission.",
+            "type": 1,
+            "options": [
+                {
+                    "name": "user",
+                    "description": "User to be kicked",
+                    "type": 6,
+                    "required": true
+                },
+                {
+                    "name": "reason",
+                    "description": "Why is the user being kicked?",
+                    "type": 3,
+                    "required": false
+                }
+            ]
+        },
+        {
+            "name": "ban",
+            "description": "Ban a person from the server. Requires Ban Members permission.",
+            "type": 1,
+            "options": [
+                {
+                    "name": "user",
+                    "description": "User to be banned",
+                    "type": 6,
+                    "required": true
+                },
+                {
+                    "name": "reason",
+                    "description": "Why is the user being banned?",
+                    "type": 3,
+                    "required": true
+                }
+            ]
+        }
+    ]
+}
