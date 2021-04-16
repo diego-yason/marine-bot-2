@@ -18,17 +18,17 @@ const TOKEN = process.env.TOKEN,
 
 axiosRetry(discordAxios, { retries: 3 });
 
+interface commands {
+    [key: string]: Function;
+}
 const slash = {};
 
-/**
- * @type {object} Array of all command callbacks found in the "commands" folder
- */
+type not_exist = null | undefined;
 
 // setting up monitor
-axios.post(process.env.MONITOR);
-const monitor = setInterval(() => {
-    axios.post(process.env.MONITOR);
-}, 300000);
+axios.post(process.env.MONITOR!);
+
+const monitor = setInterval(() => axios.post(process.env.MONITOR!), 300000);
 
 function readDir(folderName = "commands", lastPath = ".") {
     const dirPath = `${lastPath}/${folderName}`;
@@ -157,7 +157,7 @@ bot.on("message", (raw) => {
         }
         case 10: {
             // Hello!
-            heartbeat_interval = setInterval(function(sequence: number | undefined | null) {
+            heartbeat_interval = setInterval(function(sequence : number | not_exist) {
                 if (!heartbeat_ack) {
                     bot.close(3000);
                     return;
@@ -203,6 +203,7 @@ bot.on("message", (raw) => {
 
 bot.on("close", (code, reason) => {
     clearInterval(heartbeat_interval);
+    clearInterval(monitor);
 
     // very lazy approach but couldn't bother right now
     // TODO when reconnecting is possible, do that
