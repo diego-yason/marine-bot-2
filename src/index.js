@@ -62,7 +62,7 @@ function readDir(folderName = "commands", lastPath = ".") {
 function registerCommand(filePath) {
     const name = filePath.slice(11, -3);
 
-    slash[name] = require(filePath);
+    slash[name] = require("../" + filePath);
 }
 
 readDir();
@@ -204,7 +204,7 @@ bot.on("message", (raw) => {
                         $browser: "NodeJS",
                         $device: "NodeJS",
                     },
-                    intents: 32511,
+                    intents: process.env.INTENT,
                 },
             }));
             break;
