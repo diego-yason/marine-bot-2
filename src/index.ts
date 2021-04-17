@@ -5,6 +5,8 @@ import ws from "ws";
 import * as fs from "fs";
 import axios from "axios";
 import axiosRetry from "axios-retry";
+import { Interaction } from "../res/interaction";
+import { D as GatewayHello } from "../res/gateway-hello";
 
 const TOKEN = process.env.TOKEN,
       // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -21,7 +23,7 @@ axiosRetry(discordAxios, { retries: 3 });
 interface commands {
     [key: string]: Function;
 }
-const slash = {};
+const slash: commands = {};
 
 type not_exist = null | undefined;
 
@@ -63,22 +65,22 @@ bot.on("open", () => {
 });
 
 bot.on("message", (raw) => {
-    const { op, d: data, t: EVENT_NAME, s } = JSON.parse(raw);
+    // d has to be marked as any or else ts will flag some parts of the code below
+    // d could either be GatewayHello or Interaction   vvvv
+    const { op, d, t: EVENT_NAME, s } : { op: number, d:any , t: string, s: number } = JSON.parse(raw);
 
     lastSequence = s;
 
     switch (op) {
         case 0: {
+            const data: Interaction = d;
             if (EVENT_NAME === "INTERACTION_CREATE") {
                 const intData = data.data;
                 let command;
                 // REMINDME this only handles 1 nested subcommand, not a group
                 // TODO allow this to go through multiple subcommands
                 try {
-                    if (intData.options[0] === 1) {
-                        // its a subcommand
-                        command = `${intData.name}/${intData.options[0].name}`;
-                    }
+                    command = `${intData.name}/${intData.options[0].name}`;
                 } catch (e) {
                     // probably means that theres no subcommand
                     command = intData.name;
@@ -156,6 +158,7 @@ bot.on("message", (raw) => {
             throw new Error("Session was invalid");
         }
         case 10: {
+            const data: GatewayHello = d;
             // Hello!
             heartbeat_interval = setInterval(function(sequence : number | not_exist) {
                 if (!heartbeat_ack) {
