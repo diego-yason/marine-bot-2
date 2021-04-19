@@ -81,7 +81,7 @@ function startSession(resume, sessionId, lastSeq) {
         var bot, heartbeat_interval, lastSequence, heartbeat_ack, SESSION_ID;
         return __generator(this, function (_a) {
             bot = new ws("wss://gateway.discord.gg?v=8");
-            heartbeat_ack = false, SESSION_ID = sessionId;
+            heartbeat_ack = false, SESSION_ID = sessionId || "";
             bot.on("open", function () {
                 console.log("Open!");
             });
@@ -90,7 +90,6 @@ function startSession(resume, sessionId, lastSeq) {
                 // d could either be GatewayHello or Interaction   vvvv
                 var _a = JSON.parse(raw), op = _a.op, d = _a.d, EVENT_NAME = _a.t, s = _a.s;
                 lastSequence = s;
-                console.log(op);
                 switch (op) {
                     case 0: {
                         switch (EVENT_NAME) {
@@ -237,7 +236,7 @@ function startSession(resume, sessionId, lastSeq) {
                 clearInterval(heartbeat_interval);
                 heartbeat_interval = undefined;
                 if (reason === "reconnect") {
-                    startSession(true, sessionId, lastSequence);
+                    startSession(true, SESSION_ID, lastSequence);
                     console.log("Started a new session!");
                 }
                 else {

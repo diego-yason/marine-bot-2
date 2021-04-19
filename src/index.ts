@@ -62,7 +62,7 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
     let heartbeat_interval,
         lastSequence,
         heartbeat_ack = false,
-        SESSION_ID: string | not_exist = sessionId;
+        SESSION_ID: string = sessionId || "";
 
     bot.on("open", () => {
         console.log("Open!");
@@ -75,7 +75,6 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
 
         lastSequence = s;
 
-        console.log(op);
         switch (op) {
             case 0: {
                 switch (EVENT_NAME) {
@@ -232,7 +231,7 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
         heartbeat_interval = undefined;
 
         if (reason === "reconnect") {
-            startSession(true, sessionId, lastSequence)
+            startSession(true, SESSION_ID, lastSequence)
             console.log("Started a new session!");
         } else {
             throw new Error("Connection closed, code: " + code + " | reason: " + reason);
