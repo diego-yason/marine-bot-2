@@ -5,8 +5,11 @@ import * as ws from "ws";
 import * as fs from "fs";
 import axios from "axios";
 import * as axiosRetry from "axios-retry";
+
+// Custom .d.ts files
 import { Interaction } from "../res/interaction";
 import { D as GatewayHello } from "../res/gateway-hello";
+import { Ready } from "../res/ready";
 
 const discordAxios = axios.create({
           baseURL: "https://discord.com/api/v8",
@@ -59,24 +62,25 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
     let heartbeat_interval,
         lastSequence,
         heartbeat_ack = false,
-        SESSION_ID;
+        SESSION_ID: string | not_exist = sessionId;
 
     bot.on("open", () => {
         console.log("Open!");
     });
 
-    bot.on("message", (raw) => {
+    bot.on("message", (raw: any) => {
         // d has to be marked as any or else ts will flag some parts of the code below
         // d could either be GatewayHello or Interaction   vvvv
         const { op, d, t: EVENT_NAME, s } : { op: number, d:any , t: string, s: number } = JSON.parse(raw);
 
         lastSequence = s;
 
+        console.log(op);
         switch (op) {
             case 0: {
-                const data: Interaction = d;
                 switch (EVENT_NAME) {
                     case "INTERACTION_CREATE": {
+                        const data: Interaction = d;
                         const intData = data.data;
                         let command;
                         // REMINDME this only handles 1 nested subcommand, not a group
@@ -131,15 +135,20 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
                         }
 
                         console.log("wow an interaction!");
-                        }
-                    break;
+                        break;    
                     }
+                    case "READY": {
+                        const data: Ready = d;
+                        SESSION_ID = data.session_id;
+                        break;
+                    }
+                }
                 break;
             }
             case 1: {
                 // asking for ping
                 if (!heartbeat_ack) {
-                    bot.close(2);
+                    bot.close(4001);
                 }
 
                 console.log("Sent a heartbeat!");
@@ -154,7 +163,7 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
             case 7: {
                 // reconnect request
                 console.log("Got a reconnect request");
-                bot.close(1)
+                bot.close(4000)
             }
             case 9: {
                 // invalid session
@@ -165,7 +174,7 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
                 // Hello!
                 heartbeat_interval = setInterval(function(sequence : number | not_exist) {
                     if (!heartbeat_ack) {
-                        bot.close(2);
+                        bot.close(4001);
                         return;
                     }
 
@@ -218,15 +227,18 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
         }
     });
 
-    bot.on("close", (code: number, reason: string) => {
+    bot.on("close", (code: number, reason = "") => {
         clearInterval(heartbeat_interval);
+        heartbeat_interval = undefined;
 
         if (reason === "reconnect") {
             startSession(true, sessionId, lastSequence)
+            console.log("Started a new session!");
         } else {
-            throw new Error("Connection closed, code: " + code);
+            throw new Error("Connection closed, code: " + code + " | reason: " + reason);
         }
     });
 }
 
 startSession();
+console.log("Called start session!")

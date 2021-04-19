@@ -81,7 +81,7 @@ function startSession(resume, sessionId, lastSeq) {
         var bot, heartbeat_interval, lastSequence, heartbeat_ack, SESSION_ID;
         return __generator(this, function (_a) {
             bot = new ws("wss://gateway.discord.gg?v=8");
-            heartbeat_ack = false;
+            heartbeat_ack = false, SESSION_ID = sessionId;
             bot.on("open", function () {
                 console.log("Open!");
             });
@@ -90,72 +90,77 @@ function startSession(resume, sessionId, lastSeq) {
                 // d could either be GatewayHello or Interaction   vvvv
                 var _a = JSON.parse(raw), op = _a.op, d = _a.d, EVENT_NAME = _a.t, s = _a.s;
                 lastSequence = s;
+                console.log(op);
                 switch (op) {
                     case 0: {
-                        var data_1 = d;
                         switch (EVENT_NAME) {
-                            case "INTERACTION_CREATE":
-                                {
-                                    var intData = data_1.data;
-                                    var command = void 0;
-                                    // REMINDME this only handles 1 nested subcommand, not a group
-                                    // TODO allow this to go through multiple subcommands
-                                    try {
-                                        command = intData.name + "/" + intData.options[0].name;
-                                    }
-                                    catch (e) {
-                                        // probably means that theres no subcommand
-                                        command = intData.name;
-                                    }
-                                    discordAxios.post("/interactions/" + data_1.id + "/" + data_1.token + "/callback", {
-                                        type: 5
-                                    });
-                                    var res = {
-                                        /**
-                                         * This will send a plain text reply to Discord. Markdown is supported.
-                                         * @param {string} message
-                                         */
-                                        reply: function (message) {
-                                            discordAxios.patch("/webhooks/" + APP_ID + "/" + data_1.token + "/messages/@original", {
-                                                content: message
-                                            });
-                                        },
-                                        /**
-                                         * This sends an embed to Discord. Follow the structure from Discord. https://discord.com/developers/docs/resources/channel#embed-object
-                                         * @param {object} embedData JSON Embed Data. Can be in an array if you want to put multiple embeds. Max of 10.
-                                         * @param {string} [message] Optional. Plain text message
-                                         */
-                                        embed: function (embedData, message) {
-                                            if (message === void 0) { message = ""; }
-                                            // Check if embedData is array
-                                            if (!Array.isArray(embedData)) {
-                                                [embedData];
-                                            }
-                                            if (embedData.length > 10) {
-                                                throw new TypeError("Too many embeds!");
-                                            }
-                                            discordAxios.patch("/webhooks/" + APP_ID + "/" + data_1.token + "/messages/@original", {
-                                                content: message,
-                                                embeds: embedData
-                                            });
-                                        }
-                                    };
-                                    try {
-                                        slash[command](discordAxios, data_1, res);
-                                    }
-                                    catch (e) {
-                                        // i don't really care about this yet
-                                    }
-                                    console.log("wow an interaction!");
+                            case "INTERACTION_CREATE": {
+                                var data_1 = d;
+                                var intData = data_1.data;
+                                var command = void 0;
+                                // REMINDME this only handles 1 nested subcommand, not a group
+                                // TODO allow this to go through multiple subcommands
+                                try {
+                                    command = intData.name + "/" + intData.options[0].name;
                                 }
+                                catch (e) {
+                                    // probably means that theres no subcommand
+                                    command = intData.name;
+                                }
+                                discordAxios.post("/interactions/" + data_1.id + "/" + data_1.token + "/callback", {
+                                    type: 5
+                                });
+                                var res = {
+                                    /**
+                                     * This will send a plain text reply to Discord. Markdown is supported.
+                                     * @param {string} message
+                                     */
+                                    reply: function (message) {
+                                        discordAxios.patch("/webhooks/" + APP_ID + "/" + data_1.token + "/messages/@original", {
+                                            content: message
+                                        });
+                                    },
+                                    /**
+                                     * This sends an embed to Discord. Follow the structure from Discord. https://discord.com/developers/docs/resources/channel#embed-object
+                                     * @param {object} embedData JSON Embed Data. Can be in an array if you want to put multiple embeds. Max of 10.
+                                     * @param {string} [message] Optional. Plain text message
+                                     */
+                                    embed: function (embedData, message) {
+                                        if (message === void 0) { message = ""; }
+                                        // Check if embedData is array
+                                        if (!Array.isArray(embedData)) {
+                                            [embedData];
+                                        }
+                                        if (embedData.length > 10) {
+                                            throw new TypeError("Too many embeds!");
+                                        }
+                                        discordAxios.patch("/webhooks/" + APP_ID + "/" + data_1.token + "/messages/@original", {
+                                            content: message,
+                                            embeds: embedData
+                                        });
+                                    }
+                                };
+                                try {
+                                    slash[command](discordAxios, data_1, res);
+                                }
+                                catch (e) {
+                                    // i don't really care about this yet
+                                }
+                                console.log("wow an interaction!");
                                 break;
+                            }
+                            case "READY": {
+                                var data = d;
+                                SESSION_ID = data.session_id;
+                                break;
+                            }
                         }
                         break;
                     }
                     case 1: {
                         // asking for ping
                         if (!heartbeat_ack) {
-                            bot.close(2);
+                            bot.close(4001);
                         }
                         console.log("Sent a heartbeat!");
                         bot.send(JSON.stringify({
@@ -168,7 +173,7 @@ function startSession(resume, sessionId, lastSeq) {
                     case 7: {
                         // reconnect request
                         console.log("Got a reconnect request");
-                        bot.close(1);
+                        bot.close(4000);
                     }
                     case 9: {
                         // invalid session
@@ -179,7 +184,7 @@ function startSession(resume, sessionId, lastSeq) {
                         // Hello!
                         heartbeat_interval = setInterval(function (sequence) {
                             if (!heartbeat_ack) {
-                                bot.close(2);
+                                bot.close(4001);
                                 return;
                             }
                             console.log("Sent a heartbeat!");
@@ -228,12 +233,15 @@ function startSession(resume, sessionId, lastSeq) {
                 }
             });
             bot.on("close", function (code, reason) {
+                if (reason === void 0) { reason = ""; }
                 clearInterval(heartbeat_interval);
+                heartbeat_interval = undefined;
                 if (reason === "reconnect") {
                     startSession(true, sessionId, lastSequence);
+                    console.log("Started a new session!");
                 }
                 else {
-                    throw new Error("Connection closed, code: " + code);
+                    throw new Error("Connection closed, code: " + code + " | reason: " + reason);
                 }
             });
             return [2 /*return*/];
@@ -241,4 +249,5 @@ function startSession(resume, sessionId, lastSeq) {
     });
 }
 startSession();
+console.log("Called start session!");
 //# sourceMappingURL=index.js.map
