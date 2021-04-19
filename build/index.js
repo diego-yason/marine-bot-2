@@ -250,4 +250,3 @@ function startSession(resume, sessionId, lastSeq) {
 }
 startSession();
 console.log("Called start session!");
-//# sourceMappingURL=index.js.map

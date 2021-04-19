@@ -4,7 +4,6 @@
         "watch": true,
         "strictNullChecks": true,
         "outDir": "build",
-        "sourceMap": true,
         "rootDir": "src",
         "allowJs": true
     }
