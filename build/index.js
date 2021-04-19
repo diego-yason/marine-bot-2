@@ -232,3 +232,4 @@ function startSession(resume, sessionId, lastSeq) {
     });
 }
 startSession();
+//# sourceMappingURL=index.js.map

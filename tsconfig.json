@@ -3,6 +3,8 @@
         "target": "ES3",
         "watch": true,
         "strictNullChecks": true,
-        "outDir": "build"
+        "outDir": "build",
+        "sourceMap": true,
+        "rootDir": "src"
     }
 }
