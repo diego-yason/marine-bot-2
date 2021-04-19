@@ -5,6 +5,7 @@
         "strictNullChecks": true,
         "outDir": "build",
         "sourceMap": true,
-        "rootDir": "src"
+        "rootDir": "src",
+        "allowJs": true
     }
 }
