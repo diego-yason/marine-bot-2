@@ -70,7 +70,7 @@ function readDir(folderName, lastPath) {
     }
 }
 function registerCommand(filePath) {
-    var name = filePath.slice(11, -3);
+    var name = filePath.slice(17, -3);
     slash[name] = require("../" + filePath);
 }
 readDir();
@@ -144,6 +144,7 @@ function startSession(resume, sessionId, lastSeq) {
                                 }
                                 catch (e) {
                                     // i don't really care about this yet
+                                    console.log("Command failed! " + command);
                                 }
                                 console.log("wow an interaction!");
                                 break;

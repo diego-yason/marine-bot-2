@@ -48,7 +48,7 @@ function readDir(folderName = "commands", lastPath = "./build") {
 }
 
 function registerCommand(filePath: string) {
-    const name = filePath.slice(11, -3);
+    const name = filePath.slice(17, -3);
 
     slash[name] = require("../" + filePath);
 }
@@ -131,6 +131,7 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
                             slash[command](discordAxios, data, res);
                         } catch (e) {
                             // i don't really care about this yet
+                            console.log("Command failed! " + command);
                         }
 
                         console.log("wow an interaction!");
