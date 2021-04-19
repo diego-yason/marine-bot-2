@@ -55,7 +55,7 @@ axios_1["default"].post(process.env.MONITOR);
 var monitor = setInterval(function () { return axios_1["default"].post(process.env.MONITOR); }, 300000);
 function readDir(folderName, lastPath) {
     if (folderName === void 0) { folderName = "commands"; }
-    if (lastPath === void 0) { lastPath = "."; }
+    if (lastPath === void 0) { lastPath = "./build"; }
     var dirPath = lastPath + "/" + folderName;
     var items = fs.readdirSync(dirPath);
     for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
@@ -71,7 +71,7 @@ function readDir(folderName, lastPath) {
 }
 function registerCommand(filePath) {
     var name = filePath.slice(11, -3);
-    slash[name] = require("../build" + filePath);
+    slash[name] = require("../" + filePath);
 }
 readDir();
 // REMINDME this is not a good idea since we're not checking how many shards are available

@@ -31,7 +31,7 @@ axios.post(process.env.MONITOR!);
 
 const monitor = setInterval(() => axios.post(process.env.MONITOR!), 300000);
 
-function readDir(folderName = "commands", lastPath = ".") {
+function readDir(folderName = "commands", lastPath = "./build") {
     const dirPath = `${lastPath}/${folderName}`;
     const items = fs.readdirSync(dirPath);
     for (const item of items) {
@@ -215,7 +215,7 @@ async function startSession(resume: boolean = false, sessionId?: string, lastSeq
         }
     });
 
-    bot.on("close", (code: number, reason: ) => {
+    bot.on("close", (code: number, reason: string) => {
         clearInterval(heartbeat_interval);
 
         
