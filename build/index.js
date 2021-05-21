@@ -51,7 +51,9 @@ var discordAxios = axios_1["default"].create({
 axiosRetry(discordAxios, { retries: 3 });
 var slash = {};
 // setting up monitor
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 axios_1["default"].post(process.env.MONITOR);
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 var monitor = setInterval(function () { return axios_1["default"].post(process.env.MONITOR); }, 300000);
 function readDir(folderName, lastPath) {
     if (folderName === void 0) { folderName = "commands"; }
@@ -174,6 +176,7 @@ function startSession(resume, sessionId, lastSeq) {
                         // reconnect request
                         console.log("Got a reconnect request");
                         bot.close(4000);
+                        break;
                     }
                     case 9: {
                         // invalid session

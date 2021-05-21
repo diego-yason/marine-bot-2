@@ -22,6 +22,7 @@ const discordAxios = axios.create({
 axiosRetry(discordAxios, { retries: 3 });
 
 interface commands {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     [key: string]: Function;
 }
 
@@ -30,8 +31,10 @@ const slash: commands = {};
 type not_exist = null | undefined;
 
 // setting up monitor
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 axios.post(process.env.MONITOR!);
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const monitor = setInterval(() => axios.post(process.env.MONITOR!), 300000);
 
 function readDir(folderName = "commands", lastPath = "./build") {
@@ -68,10 +71,10 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
         console.log("Open!");
     });
 
-    bot.on("message", (raw: any) => {
+    bot.on("message", (raw: never) => {
         // d has to be marked as any or else ts will flag some parts of the code below
         // d could either be GatewayHello or Interaction   vvvv
-        const { op, d, t: EVENT_NAME, s } : { op: number, d:any , t: string, s: number } = JSON.parse(raw);
+        const { op, d, t: EVENT_NAME, s } : { op: number, d:never, t: string, s: number } = JSON.parse(raw);
 
         lastSequence = s;
 
@@ -135,7 +138,7 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
                         }
 
                         console.log("wow an interaction!");
-                        break;    
+                        break;
                     }
                     case "READY": {
                         const data: Ready = d;
@@ -163,7 +166,8 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
             case 7: {
                 // reconnect request
                 console.log("Got a reconnect request");
-                bot.close(4000)
+                bot.close(4000);
+                break;
             }
             case 9: {
                 // invalid session
@@ -232,7 +236,7 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
         heartbeat_interval = undefined;
 
         if (reason === "reconnect") {
-            startSession(true, SESSION_ID, lastSequence)
+            startSession(true, SESSION_ID, lastSequence);
             console.log("Started a new session!");
         } else {
             throw new Error("Connection closed, code: " + code + " | reason: " + reason);
@@ -241,4 +245,4 @@ async function startSession(resume = false, sessionId?: string, lastSeq?: number
 }
 
 startSession();
-console.log("Called start session!")
+console.log("Called start session!");
